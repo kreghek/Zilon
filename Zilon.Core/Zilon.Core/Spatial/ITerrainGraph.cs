@@ -1,20 +1,22 @@
-﻿namespace Zilon.Core.Spatial
+﻿using System.Collections.Generic;
+
+namespace Zilon.Core.Spatial
 {
     /// <summary>
     /// Пространственная карта в виде графа.
     /// </summary>
-    public interface ITerrainGraph<TNode> where TNode : ITerrainNode
+    public interface ITerrainGraph
     {
         /// <summary>
         /// Список узлов карты.
         /// </summary>
-        ITerrainNode[] Nodes { get; }
+        IEnumerable<ITerrainNode> Nodes { get; }
 
         /// <summary>
         /// Предоставляет список узлов, с которыми соединён указанный узел.
         /// </summary>
         /// <param name="node"> Проверяемый узел. </param>
         /// <returns> Возвращает список соседних узлов. </returns>
-        ITerrainNode[] GetNeighborNodes(ITerrainNode node);
+        IEnumerable<ITerrainNode> GetNeighborNodes(ITerrainNode node);
     }
 }
