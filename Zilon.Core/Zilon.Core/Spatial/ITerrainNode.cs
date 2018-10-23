@@ -5,5 +5,9 @@
     /// </summary>
     public interface ITerrainNode
     {
+        /// <summary>
+        /// Координаты смещения узла для графического представления.
+        /// </summary>
+        OffsetCoords Offset { get; }
     }
 }

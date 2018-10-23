@@ -1,7 +1,13 @@
 ﻿namespace Zilon.Core.Spatial
 {
-    public class HexNode: ITerrainNode
+    public sealed class HexNode: ITerrainNode
     {
-        
+        public OffsetCoords Offset { get; }
+
+        public HexNode(int offsetX, int offsetY)
+        {
+            var offset = new OffsetCoords(offsetX, offsetY);
+            Offset = offset;
+        }
     }
 }
