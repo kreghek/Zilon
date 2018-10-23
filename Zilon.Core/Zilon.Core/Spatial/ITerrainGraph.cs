@@ -11,8 +11,10 @@
         ITerrainNode[] Nodes { get; }
 
         /// <summary>
-        /// Ребра карты.
+        /// Предоставляет список узлов, с которыми соединён указанный узел.
         /// </summary>
-        ITerrainEdge[] Edges { get; }
+        /// <param name="node"> Проверяемый узел. </param>
+        /// <returns> Возвращает список соседних узлов. </returns>
+        ITerrainNode[] GetNeighborNodes(ITerrainNode node);
     }
 }
