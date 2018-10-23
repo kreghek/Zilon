@@ -63,7 +63,7 @@ namespace Zilon.Core.Spatial
                 else if (neighborOffset.Y < 0)
                 {
                     var segmentMatrix = CreateSegment(segmentX, segmentY - 1);
-                    yield return segmentMatrix[localOffsetX, localOffsetY - 1];
+                    yield return segmentMatrix[localOffsetX, _segmentSize - 1];
                 }
                 else if (neighborOffset.Y >= _segmentSize)
                 {
