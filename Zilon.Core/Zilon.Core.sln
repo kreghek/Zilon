@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zilon.Core", "Zilon.Core\Zilon.Core.csproj", "{93535D50-1359-4585-86DC-D2B84E29CC54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93535D50-1359-4585-86DC-D2B84E29CC54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93535D50-1359-4585-86DC-D2B84E29CC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93535D50-1359-4585-86DC-D2B84E29CC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93535D50-1359-4585-86DC-D2B84E29CC54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B342C3EC-7973-4D4F-A3E9-4A903475D557}
+	EndGlobalSection
+EndGlobal
