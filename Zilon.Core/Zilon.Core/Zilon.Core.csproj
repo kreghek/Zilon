@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spatial\HexNode.cs" />
-    <Compile Include="Spatial\INodeFactory.cs" />
     <Compile Include="Spatial\ITerrainGraph.cs" />
     <Compile Include="Spatial\ITerrainNode.cs" />
     <Compile Include="Spatial\LazyHexMap.cs" />

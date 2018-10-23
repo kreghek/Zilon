@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zilon.Core", "Zilon.Core\Zilon.Core.csproj", "{93535D50-1359-4585-86DC-D2B84E29CC54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zilon.Core.Tests", "Zilon.Core.Tests\Zilon.Core.Tests.csproj", "{B798F884-F649-4505-9C1D-F66D41968E5D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{544858C7-9177-45E2-8D7A-89241B169EEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{93535D50-1359-4585-86DC-D2B84E29CC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93535D50-1359-4585-86DC-D2B84E29CC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93535D50-1359-4585-86DC-D2B84E29CC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B798F884-F649-4505-9C1D-F66D41968E5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B798F884-F649-4505-9C1D-F66D41968E5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B798F884-F649-4505-9C1D-F66D41968E5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B798F884-F649-4505-9C1D-F66D41968E5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B798F884-F649-4505-9C1D-F66D41968E5D} = {544858C7-9177-45E2-8D7A-89241B169EEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B342C3EC-7973-4D4F-A3E9-4A903475D557}
