@@ -9,5 +9,10 @@
             var offset = new OffsetCoords(offsetX, offsetY);
             Offset = offset;
         }
+
+        public override string ToString()
+        {
+            return $"{Offset}";
+        }
     }
 }

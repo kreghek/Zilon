@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Zilon.Core.Spatial
 {
@@ -9,6 +10,11 @@ namespace Zilon.Core.Spatial
 
         public LazyHexMap(int segmentSize)
         {
+            if (segmentSize % 2 != 0)
+            {
+                throw new ArgumentException("Аргумент должен быть нечтётным", nameof(segmentSize));
+            }
+
             _segmentSize = segmentSize;
 
             _segmentDict = new Dictionary<SegmentKey, ITerrainNode[,]>();
@@ -72,7 +78,7 @@ namespace Zilon.Core.Spatial
                 }
                 else
                 {
-                    yield return matrix[localOffsetX, localOffsetY];
+                    yield return matrix[neighborOffset.X, neighborOffset.Y];
                 }
             }
         }
@@ -88,7 +94,7 @@ namespace Zilon.Core.Spatial
 
             for (var i = 0; i < _segmentSize; i++)
             for (var j = 0; j < _segmentSize; j++)
-                matrix[i, j] = new HexNode(i, j);
+                matrix[i, j] = new HexNode(i + segmentX * _segmentSize, j + segmentY * _segmentSize);
 
             var key = new SegmentKey(segmentX, segmentY);
             _segmentDict[key] = matrix;
