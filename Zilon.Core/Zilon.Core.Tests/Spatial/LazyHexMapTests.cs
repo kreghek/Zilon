@@ -32,10 +32,11 @@ namespace Zilon.Core.Tests.Spatial
 
 
         /// <summary>
-        /// Тест проверяет, что при запросе соседних узлов из угла сектора не происходит ошибок.
+        /// Тест проверяет, что при запросе соседних узлов из угла сегмента возвращаются
+        /// корректные номера узлов.
         /// </summary>
         [Test]
-        public void GetNeighborNodesTest()
+        public void GetNeighborNodes_NodeFromTopLeftCorner_NodesFromFourSegments()
         {
             // ARRANGE
             const int segmentSize = 4;
@@ -52,7 +53,15 @@ namespace Zilon.Core.Tests.Spatial
 
 
             // ASSERT
-            nodeArray[0].Offset.Should().Be(new OffsetCoords());
+            nodeArray[0].Offset.Should().Be(new OffsetCoords(-1, 0));
+
+            nodeArray[1].Offset.Should().Be(new OffsetCoords(-1, 1));
+            nodeArray[2].Offset.Should().Be(new OffsetCoords(0, 1));
+
+            nodeArray[3].Offset.Should().Be(new OffsetCoords(1, 0));
+
+            nodeArray[4].Offset.Should().Be(new OffsetCoords(0, -1));
+            nodeArray[5].Offset.Should().Be(new OffsetCoords(-1, -1));
         }
 
         /// <summary>

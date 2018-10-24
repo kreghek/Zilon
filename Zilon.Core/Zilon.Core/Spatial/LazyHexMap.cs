@@ -50,37 +50,63 @@ namespace Zilon.Core.Spatial
             for (var i = 0; i < 6; i++)
             {
                 var dir = directions[i];
-                var neighborCube = new CubeCoords(dir.X + currentCubeCoords.X,
+                var neighborLocalCube = new CubeCoords(dir.X + currentCubeCoords.X,
                     dir.Y + currentCubeCoords.Y,
                     dir.Z + currentCubeCoords.Z);
 
-                var neighborOffset = HexHelper.ConvertToOffset(neighborCube);
+                var neighborLocalOffset = HexHelper.ConvertToOffset(neighborLocalCube);
 
-                if (neighborOffset.X < 0)
+                var neighborSegmentX = segmentX;
+                var neighborSegmentY = segmentY;
+
+                if (neighborLocalOffset.X < 0)
                 {
-                    var segmentMatrix = CreateSegment(segmentX - 1, segmentY);
-                    yield return segmentMatrix[_segmentSize - 1, localOffsetY];
+                    neighborSegmentX--;
                 }
-                else if (neighborOffset.X >= _segmentSize)
+                else if (neighborLocalOffset.X >= _segmentSize)
                 {
-                    var segmentMatrix = CreateSegment(segmentX + 1, segmentY);
-                    yield return segmentMatrix[0, localOffsetY];
+                    neighborSegmentX++;
                 }
-                else if (neighborOffset.Y < 0)
+
+                if (neighborLocalOffset.Y < 0)
                 {
-                    var segmentMatrix = CreateSegment(segmentX, segmentY - 1);
-                    yield return segmentMatrix[localOffsetX, _segmentSize - 1];
+                    neighborSegmentY--;
                 }
-                else if (neighborOffset.Y >= _segmentSize)
+                else if (neighborLocalOffset.Y >= _segmentSize)
                 {
-                    var segmentMatrix = CreateSegment(segmentX, segmentY + 1);
-                    yield return segmentMatrix[localOffsetX, 0];
+                    neighborSegmentY++;
+                }
+
+                if (neighborSegmentX == segmentX &&
+                    neighborSegmentY == segmentY)
+                {
+                    yield return matrix[neighborLocalOffset.X, neighborLocalOffset.Y];
                 }
                 else
                 {
-                    yield return matrix[neighborOffset.X, neighborOffset.Y];
+                    var segmentMatrix = CreateSegment(neighborSegmentX, neighborSegmentY);
+                    var neighborX = neighborLocalOffset.X;
+                    var neighborY = neighborLocalOffset.Y;
+                    neighborX = NormalizeNeighborCoord(neighborX);
+                    neighborY = NormalizeNeighborCoord(neighborY);
+
+                    yield return segmentMatrix[neighborX, neighborY];
                 }
             }
+        }
+
+        private int NormalizeNeighborCoord(int neighborX)
+        {
+            if (neighborX < 0)
+            {
+                neighborX += _segmentSize;
+            }
+            else if (neighborX >= _segmentSize)
+            {
+                neighborX -= _segmentSize;
+            }
+
+            return neighborX;
         }
 
         private void CreateInitSegment()
