@@ -96,5 +96,39 @@ namespace Zilon.Core.Tests.Spatial
             nodeArray[5].Offset.Should().Be(new OffsetCoords(1, 0));
         }
 
+        /// <summary>
+        /// Тест проверяет, что при запросе соседних узлов из угла сегмента возвращаются
+        /// корректные номера узлов.
+        /// </summary>
+        [Test]
+        public void GetNeighborNodes_NodeFromBottomLeftCorner_NodesFromFourSegments()
+        {
+            // ARRANGE
+            const int segmentSize = 4;
+
+            var testedOffset = new OffsetCoords(0, -1);
+            var map = new LazyHexMap(segmentSize, new []{ testedOffset });
+            
+            var zeroNode = map.Nodes.Single(x => x.Offset.Equals(testedOffset));
+
+
+            // ACT
+            var nodes = map.GetNeighborNodes(zeroNode);
+            var nodeArray = nodes.ToArray();
+
+
+
+            // ASSERT
+            nodeArray[0].Offset.Should().Be(new OffsetCoords(-1, -1));
+
+            nodeArray[1].Offset.Should().Be(new OffsetCoords(0, 0));
+            nodeArray[2].Offset.Should().Be(new OffsetCoords(1, 0));
+
+            nodeArray[3].Offset.Should().Be(new OffsetCoords(1, -1));
+
+            nodeArray[4].Offset.Should().Be(new OffsetCoords(1, -2));
+            nodeArray[5].Offset.Should().Be(new OffsetCoords(0, -2));
+        }
+
     }
 }

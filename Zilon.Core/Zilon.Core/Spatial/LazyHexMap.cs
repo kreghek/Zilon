@@ -19,7 +19,24 @@ namespace Zilon.Core.Spatial
 
             _segmentDict = new Dictionary<SegmentKey, ITerrainNode[,]>();
 
-            CreateInitSegment();
+            CreateSegment(0, 0);
+        }
+
+        public LazyHexMap(int segmentSize, OffsetCoords[] startCoords)
+        {
+            if (segmentSize % 2 != 0)
+            {
+                throw new ArgumentException("Аргумент должен быть нечтётным", nameof(segmentSize));
+            }
+
+            _segmentSize = segmentSize;
+
+            _segmentDict = new Dictionary<SegmentKey, ITerrainNode[,]>();
+
+            foreach (var offsetCoord in startCoords)
+            {
+                CreateSegment(offsetCoord.X, offsetCoord.Y);
+            }
         }
 
         public IEnumerable<ITerrainNode> Nodes
@@ -37,9 +54,19 @@ namespace Zilon.Core.Spatial
         {
             var offsetCoords = node.Offset;
             var segmentX = offsetCoords.X / _segmentSize;
+            if (offsetCoords.X < 0)
+            {
+                segmentX--;
+            }
+
             var segmentY = offsetCoords.Y / _segmentSize;
-            var localOffsetX = offsetCoords.X % _segmentSize;
-            var localOffsetY = offsetCoords.Y % _segmentSize;
+            if (offsetCoords.Y < 0)
+            {
+                segmentY--;
+            }
+
+            var localOffsetX = NormalizeNeighborCoord(offsetCoords.X % _segmentSize);
+            var localOffsetY = NormalizeNeighborCoord(offsetCoords.Y % _segmentSize);
 
             var segmentKey = new SegmentKey(segmentX, segmentY);
             var matrix = _segmentDict[segmentKey];
@@ -85,10 +112,8 @@ namespace Zilon.Core.Spatial
                 else
                 {
                     var segmentMatrix = CreateSegment(neighborSegmentX, neighborSegmentY);
-                    var neighborX = neighborLocalOffset.X;
-                    var neighborY = neighborLocalOffset.Y;
-                    neighborX = NormalizeNeighborCoord(neighborX);
-                    neighborY = NormalizeNeighborCoord(neighborY);
+                    var neighborX = NormalizeNeighborCoord(neighborLocalOffset.X);
+                    var neighborY = NormalizeNeighborCoord(neighborLocalOffset.Y);
 
                     yield return segmentMatrix[neighborX, neighborY];
                 }
@@ -107,11 +132,6 @@ namespace Zilon.Core.Spatial
             }
 
             return neighborX;
-        }
-
-        private void CreateInitSegment()
-        {
-            CreateSegment(0, 0);
         }
 
         private ITerrainNode[,] CreateSegment(int segmentX, int segmentY)
