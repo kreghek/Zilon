@@ -1,4 +1,6 @@
-﻿namespace Zilon.Core.Spatial
+﻿using JetBrains.Annotations;
+
+namespace Zilon.Core.Spatial
 {
     public static class HexHelper
     {
@@ -33,6 +35,7 @@
             return new OffsetCoords(col, row);
         }
 
+        [PublicAPI]
         public static float[] ConvertToWorld(int offsetX, int offsetY)
         {
             var rowOffset = offsetY % 2 == 0 ? 0 : 0.5f;
