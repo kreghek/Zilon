@@ -2,7 +2,7 @@
 
 namespace Zilon.Core.Commands
 {
-    public class ArmyMoveCommand: ICommand
+    public class ArmyMoveCommand: IArmyModeCommand
     {
         private readonly IGlobalState _globalState;
 

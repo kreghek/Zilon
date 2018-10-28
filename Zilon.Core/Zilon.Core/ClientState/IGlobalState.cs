@@ -2,7 +2,7 @@
 {
     public interface IGlobalState
     {
-        IArmyClientModel SelectedArmy { get; }
-        ITerrainNodeClientModel HoverNode { get; }
+        IArmyClientModel SelectedArmy { get; set; }
+        ITerrainNodeClientModel HoverNode { get; set; }
     }
 }

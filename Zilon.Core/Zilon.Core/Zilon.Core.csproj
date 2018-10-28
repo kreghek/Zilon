@@ -48,6 +48,7 @@
     <Compile Include="ClientState\IGlobalState.cs" />
     <Compile Include="ClientState\ITerrainNodeClientModel.cs" />
     <Compile Include="Commands\ArmyMoveCommand.cs" />
+    <Compile Include="Commands\IArmyModeCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandManager.cs" />
     <Compile Include="Commands\QueueCommandManager.cs" />
