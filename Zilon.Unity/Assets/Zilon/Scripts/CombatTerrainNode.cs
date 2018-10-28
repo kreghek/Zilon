@@ -2,9 +2,10 @@
 
 using UnityEngine;
 
+using Zilon.Core.ClientState;
 using Zilon.Core.Spatial;
 
-public class CombatTerrainNode : MonoBehaviour
+public class CombatTerrainNode : MonoBehaviour, ITerrainNodeClientModel
 {
     public ITerrainNode Node { get; private set; }
 
@@ -13,5 +14,10 @@ public class CombatTerrainNode : MonoBehaviour
     public void Init(ITerrainNode node)
     {
         Node = node;
+    }
+
+    public void OnMouseDown()
+    {
+        Clicked?.Invoke(this, new EventArgs());
     }
 }

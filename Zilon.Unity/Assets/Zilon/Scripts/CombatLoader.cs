@@ -1,8 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
+using Zilon.Core.ClientState;
 using Zilon.Core.Combat;
+using Zilon.Core.Commands;
 using Zilon.Core.Spatial;
 
 public class CombatLoader : MonoBehaviour
@@ -14,6 +18,12 @@ public class CombatLoader : MonoBehaviour
 
     private readonly List<CombatTerrainNode> nodeModels;
     private readonly List<CombatSquadModel> squadModels;
+
+    [Inject] private ICommandManager _commandManager;
+
+    [Inject] public ICombatStateManager _combatStateManager;
+
+    [Inject] private ISquadMoveCommand _moveCommand;
 
     public CombatLoader()
     {
@@ -71,15 +81,44 @@ public class CombatLoader : MonoBehaviour
                 }
 
                 combatPersonModel.transform.position = new Vector3(personX * 1.5f, personY * 1.5f);
+
+                combatPersonModel.Clicked += CombatPersonModelOnClicked;
             }
             squadObject.Init(squad, personModelList.ToArray());
             squadModels.Add(squadObject);
         }
     }
 
+    private void CombatPersonModelOnClicked(object sender, EventArgs e)
+    {
+        var combatPersonModel = (CombatPersonModel) sender;
+        foreach (var combatSquadModel in squadModels)
+        {
+            _combatStateManager.SelectedSquad = null;
+            foreach (var personModel in combatSquadModel.PersonModels)
+            {
+                if (personModel == combatPersonModel)
+                {
+                    _combatStateManager.SelectedSquad = combatSquadModel;
+                    break;
+                }
+            }
+
+            if (_combatStateManager.SelectedSquad != null)
+            {
+                break;
+            }
+        }
+    }
+
     private void HexObject_Clicked(object sender, System.EventArgs e)
     {
-        throw new System.NotImplementedException();
+        var nodeModel = (CombatTerrainNode) sender;
+        _combatStateManager.HoverNode = nodeModel;
+        if (_combatStateManager.SelectedSquad != null)
+        {
+            _commandManager.RegisterCommand(_moveCommand);
+        }
     }
 
     // Update is called once per frame

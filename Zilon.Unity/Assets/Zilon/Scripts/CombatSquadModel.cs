@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
+using Zilon.Core.ClientState;
 using Zilon.Core.Combat;
 
-public class CombatSquadModel : MonoBehaviour
+public class CombatSquadModel : MonoBehaviour, ISquadClientModel
 {
     public CombatPersonModel[] PersonModels { get; private set; }
 

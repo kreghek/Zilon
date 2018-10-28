@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522133346459161753}
   - component: {fileID: 8855484088255946312}
+  - component: {fileID: 6210831685527738720}
   m_Layer: 0
   m_Name: Person
   m_TagString: Untagged
@@ -125,6 +126,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 067932bf6bc12c64b879dfd2b88c8526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!70 &6210831685527738720
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933257384465117431}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.041660756, y: 0.5993066}
+  m_Size: {x: 0.89874595, y: 1.315424}
+  m_Direction: 0
 --- !u!1 &5941022736615612106
 GameObject:
   m_ObjectHideFlags: 0
