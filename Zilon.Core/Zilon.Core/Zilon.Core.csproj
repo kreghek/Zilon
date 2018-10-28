@@ -52,6 +52,7 @@
     <Compile Include="ClientState\IGlobalState.cs" />
     <Compile Include="ClientState\ITerrainNodeClientModel.cs" />
     <Compile Include="Combat\CombatSquad.cs" />
+    <Compile Include="Combat\ICombatPerson.cs" />
     <Compile Include="Combat\ICombatSquad.cs" />
     <Compile Include="Commands\ISquadMoveCommand.cs" />
     <Compile Include="Commands\SquadMoveCommand.cs" />
