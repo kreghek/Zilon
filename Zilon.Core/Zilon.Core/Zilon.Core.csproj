@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientState\CombatStateManager.cs" />
     <Compile Include="ClientState\GlobalStateManager.cs" />
     <Compile Include="ClientState\ISquadClientModel.cs" />
     <Compile Include="ClientState\IArmyClientModel.cs" />
     <Compile Include="ClientState\ICombatStateManager.cs" />
     <Compile Include="ClientState\IGlobalState.cs" />
     <Compile Include="ClientState\ITerrainNodeClientModel.cs" />
+    <Compile Include="Combat\CombatSquad.cs" />
     <Compile Include="Combat\ICombatSquad.cs" />
     <Compile Include="Commands\ISquadMoveCommand.cs" />
     <Compile Include="Commands\SquadMoveCommand.cs" />
