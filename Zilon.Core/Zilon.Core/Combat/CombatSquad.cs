@@ -1,14 +1,17 @@
 ﻿using System;
 
+using JetBrains.Annotations;
+
 using Zilon.Core.Spatial;
 
 namespace Zilon.Core.Combat
 {
     public class CombatSquad : ICombatSquad
     {
-        public CombatSquad(ITerrainNode node)
+        public CombatSquad(ITerrainNode node, [NotNull] ICombatPerson[] persons)
         {
             Node = node ?? throw new ArgumentNullException(nameof(node));
+            Persons = persons ?? throw new ArgumentNullException(nameof(persons));
         }
 
         public ITerrainNode Node { get; private set; }
@@ -17,5 +20,7 @@ namespace Zilon.Core.Combat
         {
             Node = targetNode;
         }
+
+        public ICombatPerson[] Persons { get; }
     }
 }

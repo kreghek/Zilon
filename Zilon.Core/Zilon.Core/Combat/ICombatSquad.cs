@@ -6,5 +6,6 @@ namespace Zilon.Core.Combat
     {
         ITerrainNode Node { get; }
         void MoveToNode(ITerrainNode targetNode);
+        ICombatPerson[] Persons { get; }
     }
 }

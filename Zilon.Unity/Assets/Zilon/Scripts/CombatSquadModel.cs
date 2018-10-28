@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+using Zilon.Core.Combat;
 
 public class CombatSquadModel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public CombatPersonModel[] PersonModels { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    public ICombatSquad Squad { get; private set; }
+
+    public void Init(ICombatSquad squad, CombatPersonModel[] personModels)
     {
-        
+        Squad = squad;
+        PersonModels = personModels;
     }
 }

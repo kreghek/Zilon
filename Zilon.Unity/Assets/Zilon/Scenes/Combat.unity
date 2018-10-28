@@ -249,6 +249,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817245fe6e2b5a44aa75154314cf7f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HexPrefab: {fileID: 6465196296608895994, guid: 82560026fb2373044b7baf28536a107f,
+    type: 3}
+  CombatSquadPrefab: {fileID: 2017486109801198419, guid: ee993dd0e8c8bdd4494adf9ac81c0e3e,
+    type: 3}
+  CompatPersonPrefab: {fileID: 8855484088255946312, guid: ba5c08383a1eb9f4182c0d4a7d05ba50,
+    type: 3}
+  Parent: {fileID: 825974229}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -275,7 +282,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
