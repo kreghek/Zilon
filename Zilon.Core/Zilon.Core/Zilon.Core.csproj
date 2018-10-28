@@ -45,9 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientState\GlobalStateManager.cs" />
+    <Compile Include="ClientState\ISquadClientModel.cs" />
     <Compile Include="ClientState\IArmyClientModel.cs" />
+    <Compile Include="ClientState\ICombatStateManager.cs" />
     <Compile Include="ClientState\IGlobalState.cs" />
     <Compile Include="ClientState\ITerrainNodeClientModel.cs" />
+    <Compile Include="Combat\ICombatSquad.cs" />
+    <Compile Include="Commands\ISquadMoveCommand.cs" />
+    <Compile Include="Commands\SquadMoveCommand.cs" />
     <Compile Include="Commands\ArmyMoveCommand.cs" />
     <Compile Include="Commands\IArmyModeCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
@@ -57,6 +62,7 @@
     <Compile Include="GlobalMap\IMapEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spatial\CubeCoords.cs" />
+    <Compile Include="Spatial\FixedMap.cs" />
     <Compile Include="Spatial\HexHelper.cs" />
     <Compile Include="Spatial\HexNode.cs" />
     <Compile Include="Spatial\ITerrainGraph.cs" />
