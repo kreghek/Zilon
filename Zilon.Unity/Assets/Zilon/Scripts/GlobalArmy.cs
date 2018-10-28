@@ -2,21 +2,18 @@
 
 using UnityEngine;
 
-public class Army : MonoBehaviour
+using Zilon.Core.ClientState;
+using Zilon.Core.GlobalMap;
+
+public class GlobalArmy : MonoBehaviour, IArmyClientModel
 {
 
-    public Zilon.Core.GlobalMap.Army ArmyModel { get; private set; }
+    public Army Army { get; private set; }
 
     public event EventHandler Clicked;
 
     // Start is called before the first frame update
     void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
     {
         
     }
@@ -28,6 +25,6 @@ public class Army : MonoBehaviour
 
     public void Init(Zilon.Core.GlobalMap.Army army)
     {
-        ArmyModel = army;
+        Army = army;
     }
 }

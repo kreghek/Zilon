@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
+
 using Zenject;
+
 using Zilon.Core.ClientState;
 using Zilon.Core.Commands;
+using Zilon.Core.GlobalMap;
 using Zilon.Core.Spatial;
 // ReSharper disable CheckNamespace
 
@@ -16,8 +20,17 @@ public class GameLoader : MonoBehaviour
     [Inject] private IArmyModeCommand _moveCommand;
 
     public GameObject HexPrefab;
-    public Army ArmyPrefab;
+    public GlobalArmy ArmyPrefab;
     public Transform Parent;
+
+    private readonly List<GlobalTerrainNode> nodeModels;
+    private readonly List<GlobalArmy> armyModels;
+
+    public GameLoader()
+    {
+        nodeModels = new List<GlobalTerrainNode>();
+        armyModels = new List<GlobalArmy>();
+    }
 
     void Start()
     {
@@ -33,19 +46,32 @@ public class GameLoader : MonoBehaviour
             var clientModel = hexObject.GetComponent<GlobalTerrainNode>();
             clientModel.Init(node);
 
+            nodeModels.Add(clientModel);
+
             clientModel.Clicked += ClientModel_Clicked;
         }
 
-        var army = new Zilon.Core.GlobalMap.Army(map.Nodes.First());
+        var army = new Army(map.Nodes.First());
         var armyObject = Instantiate(ArmyPrefab, Parent);
         armyObject.Init(army);
         armyObject.Clicked += ArmyObject_Clicked;
+
+        armyModels.Add(armyObject);
+    }
+
+    void Update()
+    {
+        foreach (var globalArmy in armyModels)
+        {
+            var nodeModel = nodeModels.Single(x => x.Node == globalArmy.Army.Node);
+            globalArmy.transform.position = nodeModel.transform.position;
+        }
     }
 
     private void ArmyObject_Clicked(object sender, System.EventArgs e)
     {
-        var armyClicnetModel = (Army) sender;
-        _globalStateManager.SelectedArmy = armyClicnetModel;
+        var armyClientModel = (GlobalArmy) sender;
+        _globalStateManager.SelectedArmy = armyClientModel;
     }
 
     private void ClientModel_Clicked(object sender, System.EventArgs e)
