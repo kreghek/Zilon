@@ -34,7 +34,7 @@ public class CombatLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var map = new FixedMap(100);
+        var map = new FixedMap(25);
         foreach (var node in map.Nodes)
         {
             var hexObject = Instantiate(HexPrefab, Parent);
@@ -111,7 +111,7 @@ public class CombatLoader : MonoBehaviour
         }
     }
 
-    private void HexObject_Clicked(object sender, System.EventArgs e)
+    private void HexObject_Clicked(object sender, EventArgs e)
     {
         var nodeModel = (CombatTerrainNode) sender;
         _combatStateManager.HoverNode = nodeModel;
