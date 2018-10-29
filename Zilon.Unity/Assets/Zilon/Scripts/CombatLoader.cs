@@ -1,9 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
+
 using Zenject;
+
 using Zilon.Core.ClientState;
 using Zilon.Core.Combat;
 using Zilon.Core.Commands;
@@ -23,7 +25,7 @@ public class CombatLoader : MonoBehaviour
 
     [Inject] public ICombatStateManager _combatStateManager;
 
-    [Inject] private ISquadMoveCommand _moveCommand;
+    [Inject] private readonly ISquadMoveCommand _moveCommand;
 
     public CombatLoader()
     {
@@ -32,7 +34,7 @@ public class CombatLoader : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         var map = new FixedMap(25);
         foreach (var node in map.Nodes)
@@ -91,7 +93,7 @@ public class CombatLoader : MonoBehaviour
 
     private void CombatPersonModelOnClicked(object sender, EventArgs e)
     {
-        var combatPersonModel = (CombatPersonModel) sender;
+        var combatPersonModel = (CombatPersonModel)sender;
         foreach (var combatSquadModel in squadModels)
         {
             _combatStateManager.SelectedSquad = null;
@@ -113,7 +115,7 @@ public class CombatLoader : MonoBehaviour
 
     private void HexObject_Clicked(object sender, EventArgs e)
     {
-        var nodeModel = (CombatTerrainNode) sender;
+        var nodeModel = (CombatTerrainNode)sender;
         _combatStateManager.HoverNode = nodeModel;
         if (_combatStateManager.SelectedSquad != null)
         {
@@ -122,7 +124,7 @@ public class CombatLoader : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         foreach (var squad in squadModels)
         {
