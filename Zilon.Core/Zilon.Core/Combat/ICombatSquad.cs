@@ -6,9 +6,9 @@ namespace Zilon.Core.Combat
     public interface ICombatSquad
     {
         ITerrainNode Node { get; }
-        void MoveToNode(ITerrainNode targetNode);
         ICombatPerson[] Persons { get; }
-        void UseSkill(ICombatSquad targetSquad);
         Player Player { get; }
+        void MoveToNode(ITerrainNode targetNode);
+        void UseSkill(ICombatSquad targetSquad);
     }
 }
