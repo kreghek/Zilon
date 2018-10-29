@@ -56,12 +56,15 @@
     <Compile Include="Combat\ICombatPerson.cs" />
     <Compile Include="Combat\ICombatSquad.cs" />
     <Compile Include="Commands\ISquadMoveCommand.cs" />
+    <Compile Include="Commands\SquadAttackCommand.cs" />
     <Compile Include="Commands\SquadMoveCommand.cs" />
     <Compile Include="Commands\ArmyMoveCommand.cs" />
     <Compile Include="Commands\IArmyModeCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandManager.cs" />
     <Compile Include="Commands\QueueCommandManager.cs" />
+    <Compile Include="Dices\DiceExtensions.cs" />
+    <Compile Include="Dices\IDice.cs" />
     <Compile Include="GlobalMap\Army.cs" />
     <Compile Include="GlobalMap\IMapEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

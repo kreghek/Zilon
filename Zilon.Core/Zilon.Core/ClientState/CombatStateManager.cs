@@ -4,5 +4,6 @@
     {
         public ISquadClientModel SelectedSquad { get; set; }
         public ITerrainNodeClientModel HoverNode { get; set; }
+        public ISquadClientModel HoverSquad { get; set; }
     }
 }

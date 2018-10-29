@@ -7,5 +7,6 @@ namespace Zilon.Core.Combat
         ITerrainNode Node { get; }
         void MoveToNode(ITerrainNode targetNode);
         ICombatPerson[] Persons { get; }
+        void UseSkill(ICombatSquad targetSquad);
     }
 }
