@@ -55,6 +55,7 @@
     <Compile Include="Combat\CombatSquad.cs" />
     <Compile Include="Combat\ICombatPerson.cs" />
     <Compile Include="Combat\ICombatSquad.cs" />
+    <Compile Include="Commands\ISquadAttackCommand.cs" />
     <Compile Include="Commands\ISquadMoveCommand.cs" />
     <Compile Include="Commands\SquadAttackCommand.cs" />
     <Compile Include="Commands\SquadMoveCommand.cs" />

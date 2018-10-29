@@ -11,6 +11,7 @@ public class CombatInstaller : MonoInstaller<CombatInstaller>
         Container.Bind<ICommandManager>().To<QueueCommandManager>().AsSingle();
         Container.Bind<ICombatStateManager>().To<CombatStateManager>().AsSingle();
         Container.Bind<ISquadMoveCommand>().To<SquadMoveCommand>().AsSingle();
+        Container.Bind<ISquadAttackCommand>().To<SquadAttackCommand>().AsSingle();
         Container.Bind<IDice>().To<Dice>().AsSingle();
     }
 }

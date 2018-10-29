@@ -29,6 +29,8 @@ public class CombatLoader : MonoBehaviour
 
     [Inject] private readonly ISquadMoveCommand _moveCommand;
 
+    [Inject] private readonly ISquadAttackCommand _attackCommand;
+
     [Inject] private readonly IDice _dice;
 
     public CombatLoader()
@@ -56,7 +58,7 @@ public class CombatLoader : MonoBehaviour
             hexObject.Clicked += HexObject_Clicked;
         }
 
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < 6; i++)
         {
             var node = map.Nodes.Skip(i * 3 + 1).First();
             var personList = new List<ICombatPerson>();
@@ -67,7 +69,7 @@ public class CombatLoader : MonoBehaviour
                 personList.Add(person);
             }
 
-            var squad = new CombatSquad(node, personList.ToArray(), Player.Human);
+            var squad = new CombatSquad(node, personList.ToArray(), i < 2 ? Player.Human : Player.Cpu);
 
             var squadObject = Instantiate(CombatSquadPrefab, Parent);
             var personModelList = new List<CombatPersonModel>();
@@ -97,22 +99,36 @@ public class CombatLoader : MonoBehaviour
 
     private void CombatPersonModelOnClicked(object sender, EventArgs e)
     {
+        ISquadClientModel clickedSquad = null;
         var combatPersonModel = (CombatPersonModel)sender;
         foreach (var combatSquadModel in squadModels)
         {
-            _combatStateManager.SelectedSquad = null;
             foreach (var personModel in combatSquadModel.PersonModels)
             {
                 if (personModel == combatPersonModel)
                 {
-                    _combatStateManager.SelectedSquad = combatSquadModel;
+                    clickedSquad = combatSquadModel;
                     break;
                 }
             }
 
-            if (_combatStateManager.SelectedSquad != null)
+            if (clickedSquad != null)
             {
                 break;
+            }
+        }
+
+        if (_combatStateManager.SelectedSquad?.Squad.Player == Player.Human)
+        {
+            _combatStateManager.SelectedSquad = clickedSquad;
+        }
+        else
+        {
+            if (_combatStateManager.SelectedSquad != null)
+            {
+                _combatStateManager.HoverSquad = clickedSquad;
+
+                _commandManager.RegisterCommand(_attackCommand);
             }
         }
     }

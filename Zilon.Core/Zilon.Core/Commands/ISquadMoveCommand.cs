@@ -1,6 +1,6 @@
 ﻿namespace Zilon.Core.Commands
 {
-    public interface ISquadMoveCommand: ICommand
+    public interface ISquadMoveCommand : ICommand
     {
 
     }

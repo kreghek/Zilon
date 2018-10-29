@@ -2,7 +2,7 @@
 
 namespace Zilon.Core.Commands
 {
-    public class SquadAttackCommand : ISquadMoveCommand
+    public class SquadAttackCommand : ISquadAttackCommand
     {
         private readonly ICombatStateManager _combatStateManager;
 
