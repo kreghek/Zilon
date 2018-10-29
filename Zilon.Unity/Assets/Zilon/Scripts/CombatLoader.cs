@@ -9,6 +9,8 @@ using Zenject;
 using Zilon.Core.ClientState;
 using Zilon.Core.Combat;
 using Zilon.Core.Commands;
+using Zilon.Core.Dices;
+using Zilon.Core.Players;
 using Zilon.Core.Spatial;
 
 public class CombatLoader : MonoBehaviour
@@ -26,6 +28,8 @@ public class CombatLoader : MonoBehaviour
     [Inject] public ICombatStateManager _combatStateManager;
 
     [Inject] private readonly ISquadMoveCommand _moveCommand;
+
+    [Inject] private readonly IDice _dice;
 
     public CombatLoader()
     {
@@ -59,11 +63,11 @@ public class CombatLoader : MonoBehaviour
 
             for (var j = 0; j < 5; j++)
             {
-                var person = new CombatPerson();
+                var person = new CombatPerson(_dice);
                 personList.Add(person);
             }
 
-            var squad = new CombatSquad(node, personList.ToArray());
+            var squad = new CombatSquad(node, personList.ToArray(), Player.Human);
 
             var squadObject = Instantiate(CombatSquadPrefab, Parent);
             var personModelList = new List<CombatPersonModel>();

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Zilon.Core.Combat
+﻿namespace Zilon.Core.Combat
 {
     public interface ICombatPerson
     {

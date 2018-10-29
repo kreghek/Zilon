@@ -1,4 +1,5 @@
-﻿using Zilon.Core.Spatial;
+﻿using Zilon.Core.Players;
+using Zilon.Core.Spatial;
 
 namespace Zilon.Core.Combat
 {
@@ -8,5 +9,6 @@ namespace Zilon.Core.Combat
         void MoveToNode(ITerrainNode targetNode);
         ICombatPerson[] Persons { get; }
         void UseSkill(ICombatSquad targetSquad);
+        Player Player { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Zilon.Core.Dices;
 
 namespace Zilon.Core.Combat
