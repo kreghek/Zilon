@@ -14,13 +14,18 @@ namespace Zilon.Core.Commands
         public void Execute()
         {
             var squad = _combatStateManager.SelectedSquad.Squad;
-            var node = _combatStateManager.HoverNode.Node;
-            squad.MoveToNode(node);
+            var targetSquad = _combatStateManager.HoverSquad.Squad;
+            squad.UseSkill(targetSquad);
         }
 
         public bool CanExecute()
         {
             if (_combatStateManager.SelectedSquad == null)
+            {
+                return false;
+            }
+
+            if (_combatStateManager.HoverSquad == null)
             {
                 return false;
             }

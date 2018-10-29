@@ -19,15 +19,27 @@ namespace Zilon.Core.Combat
 
         public void TakeDamage(int value)
         {
+            var lastHitPoints = HitPoints;
             HitPoints -= value;
+
+            var isDead = lastHitPoints > 0 && HitPoints <= 0;
+            DoTakeDamage(value, isDead);
         }
 
         public void UseSkill(ICombatSquad targetSquad)
         {
-            var rolledEnemyPersonIndex = _dice.Roll(0, targetSquad.Persons.Length);
+            var rolledEnemyPersonIndex = _dice.Roll(0, targetSquad.Persons.Length - 1);
             var rolledPerson = targetSquad.Persons[rolledEnemyPersonIndex];
 
-            rolledPerson.TakeDamage(1);
+            rolledPerson.TakeDamage(2);
+        }
+
+        public event EventHandler<TakeDamageEventArgs> TakenDamage;
+
+        private void DoTakeDamage(int value, bool isDead)
+        {
+            var eventArgs = new TakeDamageEventArgs(value, isDead);
+            TakenDamage?.Invoke(this, eventArgs);
         }
     }
 }

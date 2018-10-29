@@ -91,6 +91,8 @@ public class CombatLoader : MonoBehaviour
                 combatPersonModel.transform.position = new Vector3(personX * 1.5f, personY * 1.5f);
 
                 combatPersonModel.Clicked += CombatPersonModelOnClicked;
+
+                combatPersonModel.Init(combatPerson);
             }
             squadObject.Init(squad, personModelList.ToArray());
             squadModels.Add(squadObject);
@@ -118,7 +120,7 @@ public class CombatLoader : MonoBehaviour
             }
         }
 
-        if (_combatStateManager.SelectedSquad?.Squad.Player == Player.Human)
+        if (clickedSquad?.Squad.Player == Player.Human)
         {
             _combatStateManager.SelectedSquad = clickedSquad;
         }
