@@ -58,6 +58,8 @@ public class CombatLoader : MonoBehaviour
             hexObject.Clicked += HexObject_Clicked;
         }
 
+        var allPersons = new List<CombatPersonModel>();
+
         for (var i = 0; i < 6; i++)
         {
             var node = map.Nodes.Skip(i * 3 + 1).First();
@@ -80,6 +82,7 @@ public class CombatLoader : MonoBehaviour
             {
                 var combatPersonModel = Instantiate(CompatPersonPrefab, squadObject.transform);
                 personModelList.Add(combatPersonModel);
+                allPersons.Add(combatPersonModel);
 
                 personX++;
                 if (personX >= formationSize)
@@ -92,7 +95,7 @@ public class CombatLoader : MonoBehaviour
 
                 combatPersonModel.Clicked += CombatPersonModelOnClicked;
 
-                combatPersonModel.Init(combatPerson, personModelList);
+                combatPersonModel.Init(combatPerson, allPersons);
             }
             squadObject.Init(squad, personModelList.ToArray());
             squadModels.Add(squadObject);

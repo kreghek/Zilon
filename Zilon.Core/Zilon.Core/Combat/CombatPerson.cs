@@ -9,6 +9,10 @@ namespace Zilon.Core.Combat
     [PublicAPI]
     public class CombatPerson : ICombatPerson
     {
+        private static int id;
+
+        private int currentId;
+
         private readonly IDice _dice;
 
         public CombatPerson(IDice dice)
@@ -16,6 +20,9 @@ namespace Zilon.Core.Combat
             _dice = dice ?? throw new ArgumentNullException(nameof(dice));
 
             HitPoints = 10;
+
+            id++;
+            currentId = id;
         }
 
         public int HitPoints { get; private set; }

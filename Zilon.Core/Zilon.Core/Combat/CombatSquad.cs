@@ -26,7 +26,7 @@ namespace Zilon.Core.Combat
 
         public void UseSkill(ICombatSquad targetSquad)
         {
-            foreach (var person in targetSquad.Persons)
+            foreach (var person in Persons)
             {
                 if (person.HitPoints > 0)
                 {

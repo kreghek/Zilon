@@ -38,7 +38,7 @@ public class CombatPersonModel : MonoBehaviour
         var targetModel = _persons.Single(x => x._combatPerson == e.Target);
 
         CreateWeaponTracer(transform.position, targetModel.transform.position);
-        CreateShootFlash(transform.position);
+        CreateShootFlash(gameObject.transform.position);
         ShakeCamera(.5f, .05f);
     }
 
@@ -71,7 +71,10 @@ public class CombatPersonModel : MonoBehaviour
 
     private void CreateWeaponTracer(Vector3 fromPosition, Vector3 targetPosition)
     {
-        var flashObject = Instantiate(ShootTracerPrefab, transform.parent.parent);
+        var tracerObject = Instantiate(ShootTracerPrefab, transform.parent.parent);
+        var tracer = tracerObject.GetComponent<BulletTracer>();
+        tracer.fromPosition = fromPosition;
+        tracer.targetPosition = targetPosition;
         //flashObject.transform.position = spawnPosition;
     }
 

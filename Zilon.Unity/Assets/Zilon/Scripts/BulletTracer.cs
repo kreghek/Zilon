@@ -13,8 +13,8 @@ public class BulletTracer : MonoBehaviour
 
     void Start()
     {
-        lineRenderer.SetPosition(0, fromPosition);
-        lineRenderer.SetPosition(1, targetPosition);
+        lineRenderer.SetPosition(0, fromPosition + Vector3.back * 5);
+        lineRenderer.SetPosition(1, targetPosition + Vector3.back * 5);
 
         //var dir = (targetPosition - fromPosition).normalized;
         //var eulerZ = Vector3.Angle(dir, transform.forward) - 90;
@@ -43,7 +43,7 @@ public class BulletTracer : MonoBehaviour
             timer += framerate;
             if (frame >= 4)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
                 
             }
             else
