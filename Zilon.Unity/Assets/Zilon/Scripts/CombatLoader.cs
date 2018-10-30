@@ -92,7 +92,7 @@ public class CombatLoader : MonoBehaviour
 
                 combatPersonModel.Clicked += CombatPersonModelOnClicked;
 
-                combatPersonModel.Init(combatPerson);
+                combatPersonModel.Init(combatPerson, personModelList);
             }
             squadObject.Init(squad, personModelList.ToArray());
             squadModels.Add(squadObject);

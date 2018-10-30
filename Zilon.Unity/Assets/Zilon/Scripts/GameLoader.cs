@@ -15,7 +15,7 @@ public class GameLoader : MonoBehaviour
 {
     [Inject] private ICommandManager _commandManager;
 
-    [Inject] private IGlobalState _globalStateManager;
+    [Inject] private IGlobalStateManager _globalStateManager;
 
     [Inject] private IArmyModeCommand _moveCommand;
 

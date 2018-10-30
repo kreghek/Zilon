@@ -1,5 +1,7 @@
 ﻿using System;
+
 using JetBrains.Annotations;
+
 using Zilon.Core.Dices;
 
 namespace Zilon.Core.Combat
@@ -32,10 +34,19 @@ namespace Zilon.Core.Combat
             var rolledEnemyPersonIndex = _dice.Roll(0, targetSquad.Persons.Length - 1);
             var rolledPerson = targetSquad.Persons[rolledEnemyPersonIndex];
 
+            DoSkillUsed(rolledPerson);
+
             rolledPerson.TakeDamage(2);
         }
 
         public event EventHandler<TakeDamageEventArgs> TakenDamage;
+        public event EventHandler<SkillUsedEventArgs> SkillUsed;
+
+        private void DoSkillUsed(ICombatPerson rolledPerson)
+        {
+            var eventArgs = new SkillUsedEventArgs(rolledPerson);
+            SkillUsed?.Invoke(this, eventArgs);
+        }
 
         private void DoTakeDamage(int value, bool isDead)
         {

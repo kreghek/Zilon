@@ -12,5 +12,8 @@ namespace Zilon.Core.Combat
 
         [PublicAPI]
         event EventHandler<TakeDamageEventArgs> TakenDamage;
+
+        [PublicAPI]
+        event EventHandler<SkillUsedEventArgs> SkillUsed;
     }
 }
