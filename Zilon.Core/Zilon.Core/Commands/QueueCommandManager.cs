@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -19,6 +20,12 @@ namespace Zilon.Core.Commands
             while (_queue.Any())
             {
                 var command = _queue.Dequeue();
+
+                if (!command.CanExecute())
+                {
+                    throw new InvalidOperationException($"Для команды {command} метод {nameof(ICommand.CanExecute)} возвращает false.");
+                }
+
                 command.Execute();
             }
         }
