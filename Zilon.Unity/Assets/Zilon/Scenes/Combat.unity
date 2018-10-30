@@ -220,7 +220,6 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420029}
   m_Layer: 0
   m_Name: Main Camera
@@ -237,25 +236,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 817245fe6e2b5a44aa75154314cf7f70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HexPrefab: {fileID: 6465196296608895994, guid: 82560026fb2373044b7baf28536a107f,
-    type: 3}
-  CombatSquadPrefab: {fileID: 2017486109801198419, guid: ee993dd0e8c8bdd4494adf9ac81c0e3e,
-    type: 3}
-  CompatPersonPrefab: {fileID: 8855484088255946312, guid: ba5c08383a1eb9f4182c0d4a7d05ba50,
-    type: 3}
-  Parent: {fileID: 825974229}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -386,8 +366,9 @@ GameObject:
   m_Component:
   - component: {fileID: 825974229}
   - component: {fileID: 825974230}
+  - component: {fileID: 825974231}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: World
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,6 +400,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 114d1bc158d6ec746850914f217629a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &825974231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825974228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817245fe6e2b5a44aa75154314cf7f70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HexPrefab: {fileID: 6465196296608895994, guid: 82560026fb2373044b7baf28536a107f,
+    type: 3}
+  CombatSquadPrefab: {fileID: 2017486109801198419, guid: ee993dd0e8c8bdd4494adf9ac81c0e3e,
+    type: 3}
+  CompatPersonPrefab: {fileID: 8855484088255946312, guid: ba5c08383a1eb9f4182c0d4a7d05ba50,
+    type: 3}
+  ShootFlashPrefab: {fileID: 9051374970867458337, guid: 6ca630d5e7ec15f45864b3fd6479e4c8,
+    type: 3}
+  ShootTracerPrefab: {fileID: 180982156575201707, guid: 08514f308e4901c42a783876e06daaec,
+    type: 3}
+  Parent: {fileID: 825974229}
 --- !u!1 &1428289797
 GameObject:
   m_ObjectHideFlags: 0

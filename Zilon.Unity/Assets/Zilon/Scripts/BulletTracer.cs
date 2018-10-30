@@ -43,7 +43,7 @@ public class BulletTracer : MonoBehaviour
             timer += framerate;
             if (frame >= 4)
             {
-                //Destroy(gameObject);
+                Destroy(gameObject);
                 
             }
             else

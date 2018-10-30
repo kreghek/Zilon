@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+
+using UnityEngine;
 
 using Zilon.Core.ClientState;
 using Zilon.Core.Combat;
@@ -18,5 +20,12 @@ public class CombatSquadModel : MonoBehaviour, ISquadClientModel
         PersonModels = personModels;
 
         Player = squad.Player;
+    }
+
+    public void DeadPerson(CombatPersonModel person)
+    {
+        var list = new List<CombatPersonModel>(PersonModels);
+        list.Remove(person);
+        PersonModels = list.ToArray();
     }
 }

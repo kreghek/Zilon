@@ -18,6 +18,8 @@ public class CombatLoader : MonoBehaviour
     public CombatTerrainNode HexPrefab;
     public CombatSquadModel CombatSquadPrefab;
     public CombatPersonModel CompatPersonPrefab;
+    public ShootFlash ShootFlashPrefab;
+    public BulletTracer ShootTracerPrefab;
     public Transform Parent;
 
     private readonly List<CombatTerrainNode> nodeModels;
@@ -58,8 +60,6 @@ public class CombatLoader : MonoBehaviour
             hexObject.Clicked += HexObject_Clicked;
         }
 
-        var allPersons = new List<CombatPersonModel>();
-
         for (var i = 0; i < 6; i++)
         {
             var node = map.Nodes.Skip(i * 3 + 1).First();
@@ -82,7 +82,6 @@ public class CombatLoader : MonoBehaviour
             {
                 var combatPersonModel = Instantiate(CompatPersonPrefab, squadObject.transform);
                 personModelList.Add(combatPersonModel);
-                allPersons.Add(combatPersonModel);
 
                 personX++;
                 if (personX >= formationSize)
@@ -94,12 +93,50 @@ public class CombatLoader : MonoBehaviour
                 combatPersonModel.transform.position = new Vector3(personX * 1.5f, personY * 1.5f);
 
                 combatPersonModel.Clicked += CombatPersonModelOnClicked;
+                combatPersonModel.SkillUsed += CombatPersonModelOnSkillUsed;
+                combatPersonModel.Dead += CombatPersonModelOnDead;
 
-                combatPersonModel.Init(combatPerson, allPersons);
+                combatPersonModel.Init(combatPerson);
             }
             squadObject.Init(squad, personModelList.ToArray());
             squadModels.Add(squadObject);
         }
+    }
+
+    private void CombatPersonModelOnDead(object sender, EventArgs e)
+    {
+        foreach (var combatSquadModel in squadModels)
+        {
+            foreach (var combatPersonModel in combatSquadModel.PersonModels)
+            {
+                if (combatPersonModel.CombatPerson == sender)
+                {
+                    combatSquadModel.DeadPerson(combatPersonModel);
+                }
+            }
+        }
+    }
+
+    private void CombatPersonModelOnSkillUsed(object sender, SkillUsedEventArgs e)
+    {
+        var senderModel = (CombatPersonModel) sender;
+        CombatPersonModel targetModel = null;
+
+        foreach (var combatSquadModel in squadModels)
+        {
+            foreach (var combatPersonModel in combatSquadModel.PersonModels)
+            {
+                if (combatPersonModel.CombatPerson == e.Target)
+                {
+                    targetModel = combatPersonModel;
+                    break;
+                }
+            }
+        }
+
+        CreateWeaponTracer(senderModel.transform.position, targetModel.transform.position);
+        CreateShootFlash(senderModel.transform.position);
+        ShakeCamera(.5f, .05f);
     }
 
     private void CombatPersonModelOnClicked(object sender, EventArgs e)
@@ -156,5 +193,33 @@ public class CombatLoader : MonoBehaviour
             var nodeModel = nodeModels.Single(x => x.Node == squad.Squad.Node);
             squad.transform.position = nodeModel.transform.position;
         }
+    }
+
+
+    private void CreateShootFlash(Vector3 spawnPosition)
+    {
+        var flashObject = Instantiate(ShootFlashPrefab, Parent);
+        flashObject.transform.position = spawnPosition;
+    }
+
+    private void CreateWeaponTracer(Vector3 fromPosition, Vector3 targetPosition)
+    {
+        var tracer = Instantiate(ShootTracerPrefab, Parent);
+        tracer.fromPosition = fromPosition;
+        tracer.targetPosition = targetPosition;
+    }
+
+
+
+    public static void ShakeCamera(float intensity, float timer)
+    {
+        //Vector3 lastCameraMovement = Vector3.zero;
+        //FunctionUpdater.Create(delegate () {
+        //    timer -= Time.unscaledDeltaTime;
+        //    Vector3 randomMovement = new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized * intensity;
+        //    Camera.main.transform.position = Camera.main.transform.position - lastCameraMovement + randomMovement;
+        //    lastCameraMovement = randomMovement;
+        //    return timer <= 0f;
+        //}, "CAMERA_SHAKE");
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1134432632187905585}
   - component: {fileID: 9201634715506207366}
+  - component: {fileID: 9051374970867458337}
   m_Layer: 0
   m_Name: ShootFlash
   m_TagString: Untagged
@@ -79,3 +80,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9051374970867458337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929924702287403607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b45ebab90b766d24c9268248c4ce623d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
