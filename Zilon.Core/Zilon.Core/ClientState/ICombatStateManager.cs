@@ -1,9 +1,13 @@
-﻿namespace Zilon.Core.ClientState
+﻿using JetBrains.Annotations;
+
+namespace Zilon.Core.ClientState
 {
     public interface ICombatStateManager
     {
-        ISquadClientModel SelectedSquad { get; set; }
-        ISquadClientModel HoverSquad { get; set; }
-        ITerrainNodeClientModel HoverNode { get; set; }
+        ISquadClientModel SelectedSquad { get; [PublicAPI] set; }
+
+        ISquadClientModel HoverSquad { get; [PublicAPI] set; }
+
+        ITerrainNodeClientModel HoverNode { get; [PublicAPI] set; }
     }
 }
