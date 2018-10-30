@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Zilon.Core.Spatial
 {
@@ -9,6 +8,7 @@ namespace Zilon.Core.Spatial
         public int Y { get; }
         public int Z { get; }
 
+        [ExcludeFromCodeCoverage]
         public CubeCoords(int x, int y, int z)
         {
             X = x;
@@ -54,31 +54,6 @@ namespace Zilon.Core.Spatial
         public static bool operator !=(CubeCoords v, CubeCoords v2)
         {
             return !(v == v2);
-        }
-
-        public static CubeCoords operator +(CubeCoords v, CubeCoords v2)
-        {
-            return new CubeCoords(v.X + v2.X, v.Y + v2.Y, v.Z + v2.Z);
-        }
-
-        public static CubeCoords operator *(CubeCoords v, int q)
-        {
-            return new CubeCoords(v.X * q, v.Y * q, v.Z * q);
-        }
-
-        public static CubeCoords operator *(int q, CubeCoords v)
-        {
-            return new CubeCoords(v.X * q, v.Y * q, v.Z * q);
-        }
-
-        public int DistanceTo(CubeCoords cubeCoords)
-        {
-            var a = this;
-            var b = cubeCoords;
-            var distance1 = Math.Max(Math.Abs(a.X - b.X), Math.Abs(a.Y - b.Y));
-            var distance = Math.Max(distance1, Math.Abs(a.Z - b.Z));
-
-            return distance;
         }
     }
 }

@@ -7,6 +7,7 @@ using Zilon.Core.Spatial;
 
 namespace Zilon.Core.Combat
 {
+    [PublicAPI]
     public class CombatSquad : ICombatSquad
     {
         public CombatSquad(ITerrainNode node, [NotNull] ICombatPerson[] persons, Player player)

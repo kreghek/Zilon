@@ -1,9 +1,10 @@
 ﻿using System;
-
+using JetBrains.Annotations;
 using Zilon.Core.Dices;
 
 namespace Zilon.Core.Combat
 {
+    [PublicAPI]
     public class CombatPerson : ICombatPerson
     {
         private readonly IDice _dice;

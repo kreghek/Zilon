@@ -1,8 +1,12 @@
 ﻿using System;
+
+using JetBrains.Annotations;
+
 using Zilon.Core.Spatial;
 
 namespace Zilon.Core.GlobalMap
 {
+    [PublicAPI]
     public class Army : IMapEntity
     {
         public Army(ITerrainNode node)

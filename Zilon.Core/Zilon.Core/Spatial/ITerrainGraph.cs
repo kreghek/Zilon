@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
 namespace Zilon.Core.Spatial
 {
     /// <summary>
@@ -7,11 +9,13 @@ namespace Zilon.Core.Spatial
     /// </summary>
     public interface ITerrainGraph
     {
+        [PublicAPI]
         /// <summary>
         /// Список узлов карты.
         /// </summary>
         IEnumerable<ITerrainNode> Nodes { get; }
 
+        [PublicAPI]
         /// <summary>
         /// Предоставляет список узлов, с которыми соединён указанный узел.
         /// </summary>
