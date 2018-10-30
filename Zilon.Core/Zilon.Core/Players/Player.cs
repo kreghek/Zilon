@@ -1,9 +1,11 @@
-﻿namespace Zilon.Core.Players
+﻿using JetBrains.Annotations;
+
+namespace Zilon.Core.Players
 {
     public enum Player
     {
-        Neutrals,
-        Human,
-        Cpu
+        [PublicAPI] Neutrals,
+        [PublicAPI] Human,
+        [PublicAPI] Cpu
     }
 }

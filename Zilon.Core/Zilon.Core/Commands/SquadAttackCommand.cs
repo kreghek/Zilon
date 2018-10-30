@@ -1,11 +1,17 @@
-﻿using Zilon.Core.ClientState;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using JetBrains.Annotations;
+
+using Zilon.Core.ClientState;
 
 namespace Zilon.Core.Commands
 {
+    [PublicAPI]
     public class SquadAttackCommand : ISquadAttackCommand
     {
         private readonly ICombatStateManager _combatStateManager;
 
+        [ExcludeFromCodeCoverage]
         public SquadAttackCommand(ICombatStateManager combatStateManager)
         {
             _combatStateManager = combatStateManager;

@@ -49,7 +49,7 @@
     <Compile Include="ClientState\ISquadClientModel.cs" />
     <Compile Include="ClientState\IArmyClientModel.cs" />
     <Compile Include="ClientState\ICombatStateManager.cs" />
-    <Compile Include="ClientState\IGlobalState.cs" />
+    <Compile Include="ClientState\IGlobalStateManager.cs" />
     <Compile Include="ClientState\ITerrainNodeClientModel.cs" />
     <Compile Include="Combat\CombatPerson.cs" />
     <Compile Include="Combat\CombatSquad.cs" />

@@ -1,11 +1,17 @@
-﻿using Zilon.Core.ClientState;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using JetBrains.Annotations;
+
+using Zilon.Core.ClientState;
 
 namespace Zilon.Core.Commands
 {
+    [PublicAPI]
     public class SquadMoveCommand : ISquadMoveCommand
     {
         private readonly ICombatStateManager _combatStateManager;
 
+        [ExcludeFromCodeCoverage]
         public SquadMoveCommand(ICombatStateManager globalState)
         {
             _combatStateManager = globalState;

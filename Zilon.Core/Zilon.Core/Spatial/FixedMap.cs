@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
 namespace Zilon.Core.Spatial
 {
+    [PublicAPI]
     public class FixedMap : ITerrainGraph
     {
         private readonly ITerrainNode[,] _nodes;
@@ -22,7 +25,8 @@ namespace Zilon.Core.Spatial
             }
         }
 
-        public IEnumerable<ITerrainNode> Nodes {
+        public IEnumerable<ITerrainNode> Nodes
+        {
             get
             {
                 for (var i = 0; i < _mapSize; i++)

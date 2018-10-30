@@ -1,12 +1,18 @@
-﻿using Zilon.Core.ClientState;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using JetBrains.Annotations;
+
+using Zilon.Core.ClientState;
 
 namespace Zilon.Core.Commands
 {
+    [PublicAPI]
     public class ArmyMoveCommand: IArmyModeCommand
     {
-        private readonly IGlobalState _globalState;
+        private readonly IGlobalStateManager _globalState;
 
-        public ArmyMoveCommand(IGlobalState globalState)
+        [ExcludeFromCodeCoverage]
+        public ArmyMoveCommand(IGlobalStateManager globalState)
         {
             _globalState = globalState;
         }
