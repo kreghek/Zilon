@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+
+using JetBrains.Annotations;
+
 using Zilon.Core.Dices;
 
 namespace Zilon.Core.Combat
@@ -13,6 +16,7 @@ namespace Zilon.Core.Combat
             _dice = dice;
         }
 
+        [ItemNotNull]
         public IEnumerable<ICombatEvent> UseSkill(ICombatSquad squad, ICombatSquad target)
         {
             var eventList = new List<ICombatEvent>();
