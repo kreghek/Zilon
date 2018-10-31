@@ -23,7 +23,8 @@ namespace Zilon.Core.Combat
                     continue;
                 }
 
-                UseSkillByPerson(person, target);
+                var personEvents = UseSkillByPerson(person, target);
+                eventList.AddRange(personEvents);
             }
 
             return eventList;
@@ -41,6 +42,8 @@ namespace Zilon.Core.Combat
             rolledPerson.TakeDamage(damage);
 
             var attackEvent = new AttackCombatEvent(person, rolledPerson, rolledPerson.HitPoints <= 0, damage);
+
+            eventList.Add(attackEvent);
 
             return eventList;
         }
