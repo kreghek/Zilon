@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Linq;
 using JetBrains.Annotations;
 
 using Zilon.Core.Players;
@@ -24,8 +24,15 @@ namespace Zilon.Core.Combat
             Node = targetNode;
         }
 
+        public void RemovePerson(ICombatPerson person)
+        {
+            var list = Persons.ToList();
+            list.Remove(person);
+            Persons = list.ToArray();
+        }
+
         public Player Player { get; }
 
-        public ICombatPerson[] Persons { get; }
+        public ICombatPerson[] Persons { get; private set; }
     }
 }

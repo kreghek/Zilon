@@ -10,6 +10,7 @@ using Zilon.Core.ClientState;
 using Zilon.Core.Combat;
 using Zilon.Core.Commands;
 using Zilon.Core.Dices;
+using Zilon.Core.NameGeneration;
 using Zilon.Core.Players;
 using Zilon.Core.Spatial;
 
@@ -23,7 +24,7 @@ public class CombatLoader : MonoBehaviour
     public Transform Parent;
 
     private readonly List<CombatTerrainNode> nodeModels;
-    private readonly List<CombatSquadModel> squadModels;
+    private readonly List<CombatSquadModel> _squadModels;
 
     [Inject] private ICommandManager _commandManager;
 
@@ -35,10 +36,12 @@ public class CombatLoader : MonoBehaviour
 
     [Inject] private readonly IDice _dice;
 
+    [Inject] private readonly ICombatEventBus _combatEventBus;
+
     public CombatLoader()
     {
         nodeModels = new List<CombatTerrainNode>();
-        squadModels = new List<CombatSquadModel>();
+        _squadModels = new List<CombatSquadModel>();
     }
 
     // Start is called before the first frame update
@@ -60,6 +63,8 @@ public class CombatLoader : MonoBehaviour
             hexObject.Clicked += HexObject_Clicked;
         }
 
+        var nameGenerator = new IdNameGenerator();
+
         for (var i = 0; i < 6; i++)
         {
             var node = map.Nodes.Skip(i * 3 + 1).First();
@@ -67,7 +72,7 @@ public class CombatLoader : MonoBehaviour
 
             for (var j = 0; j < 5; j++)
             {
-                var person = new CombatPerson(_dice);
+                var person = new CombatPerson(_dice, nameGenerator);
                 personList.Add(person);
             }
 
@@ -93,19 +98,74 @@ public class CombatLoader : MonoBehaviour
                 combatPersonModel.transform.position = new Vector3(personX * 1.5f, personY * 1.5f);
 
                 combatPersonModel.Clicked += CombatPersonModelOnClicked;
-                combatPersonModel.SkillUsed += CombatPersonModelOnSkillUsed;
                 combatPersonModel.Dead += CombatPersonModelOnDead;
 
                 combatPersonModel.Init(combatPerson);
             }
             squadObject.Init(squad, personModelList.ToArray());
-            squadModels.Add(squadObject);
+            _squadModels.Add(squadObject);
         }
+
+        _combatEventBus.EventRegistered += CombatEventBusOnEventRegistered;
+    }
+
+    private void CombatEventBusOnEventRegistered(object sender, EventArgs e)
+    {
+        var combatEvents = _combatEventBus.Events.ToArray();
+
+        var deadPersonModels = new HashSet<CombatPersonModel>();
+        foreach (var combatEvent in combatEvents)
+        {
+            var senderPerson = combatEvent.Sender;
+            if (combatEvent is AttackCombatEvent attackEvent)
+            {
+                var senderModel = FindCombatPersonModel(senderPerson);
+                var targetModel = FindCombatPersonModel(attackEvent.Target);
+
+                CreateWeaponTracer(senderModel.transform.position, targetModel.transform.position);
+                CreateShootFlash(senderModel.transform.position);
+                ShakeCamera(.5f, .05f);
+
+                if (attackEvent.TargetIsDead)
+                {
+                    deadPersonModels.Add(targetModel);
+                }
+            }
+        }
+
+        foreach (var combatPersonModel in deadPersonModels)
+        {
+            combatPersonModel.ProcessDead();
+
+            foreach (var combatSquadModel in _squadModels)
+            {
+                if (combatSquadModel.PersonModels.Contains(combatPersonModel))
+                {
+                    combatSquadModel.DeadPerson(combatPersonModel);
+                }
+            }
+        }
+    }
+
+    private CombatPersonModel FindCombatPersonModel(ICombatPerson person)
+    {
+        foreach (var combatSquadModel in _squadModels)
+        {
+            foreach (var combatPersonModel in combatSquadModel.PersonModels)
+            {
+                if (combatPersonModel.CombatPerson == person)
+                {
+                    return combatPersonModel;
+                }
+            }
+        }
+
+        throw new InvalidOperationException();
     }
 
     private void CombatPersonModelOnDead(object sender, EventArgs e)
     {
-        foreach (var combatSquadModel in squadModels)
+        foreach (var combatSquadModel in _squadModels)
         {
             foreach (var combatPersonModel in combatSquadModel.PersonModels)
             {
@@ -117,33 +177,11 @@ public class CombatLoader : MonoBehaviour
         }
     }
 
-    private void CombatPersonModelOnSkillUsed(object sender, SkillUsedEventArgs e)
-    {
-        var senderModel = (CombatPersonModel) sender;
-        CombatPersonModel targetModel = null;
-
-        foreach (var combatSquadModel in squadModels)
-        {
-            foreach (var combatPersonModel in combatSquadModel.PersonModels)
-            {
-                if (combatPersonModel.CombatPerson == e.Target)
-                {
-                    targetModel = combatPersonModel;
-                    break;
-                }
-            }
-        }
-
-        CreateWeaponTracer(senderModel.transform.position, targetModel.transform.position);
-        CreateShootFlash(senderModel.transform.position);
-        ShakeCamera(.5f, .05f);
-    }
-
     private void CombatPersonModelOnClicked(object sender, EventArgs e)
     {
         ISquadClientModel clickedSquad = null;
         var combatPersonModel = (CombatPersonModel)sender;
-        foreach (var combatSquadModel in squadModels)
+        foreach (var combatSquadModel in _squadModels)
         {
             foreach (var personModel in combatSquadModel.PersonModels)
             {
@@ -188,7 +226,7 @@ public class CombatLoader : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        foreach (var squad in squadModels)
+        foreach (var squad in _squadModels)
         {
             var nodeModel = nodeModels.Single(x => x.Node == squad.Squad.Node);
             squad.transform.position = nodeModel.transform.position;

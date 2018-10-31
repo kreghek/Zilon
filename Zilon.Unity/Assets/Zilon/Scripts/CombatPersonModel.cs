@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using UnityEngine;
+
 using Zilon.Core.Combat;
-using Zilon.Core.Spatial;
 
 public class CombatPersonModel : MonoBehaviour
 {
@@ -15,7 +14,6 @@ public class CombatPersonModel : MonoBehaviour
 
     public event EventHandler Clicked;
     public event EventHandler Dead;
-    public event EventHandler<SkillUsedEventArgs> SkillUsed;
 
     public void OnMouseDown()
     {
@@ -25,26 +23,12 @@ public class CombatPersonModel : MonoBehaviour
     public void Init(ICombatPerson combatPerson)
     {
         CombatPerson = combatPerson;
-
-        CombatPerson.SkillUsed += CombatPersonOnSkillUsed;
-        CombatPerson.TakenDamage += CombatPersonOnTakenDamage;
     }
 
-    private void CombatPersonOnSkillUsed(object sender, SkillUsedEventArgs e)
+    public void ProcessDead()
     {
-        SkillUsed?.Invoke(this, e);
-    }
-
-    private void CombatPersonOnTakenDamage(object sender, TakeDamageEventArgs e)
-    {
-        Debug.Log(ToString() + " " + e.Value);
-        if (e.Dead)
-        {
-            _isDead = true;
-            Dead?.Invoke(this, new EventArgs());
-            CreateCorpse();
-            Destroy(gameObject);
-        }
+        CreateCorpse();
+        Destroy(gameObject);
     }
 
     private void CreateCorpse()

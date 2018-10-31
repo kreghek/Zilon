@@ -71,6 +71,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Combat\CombatServiceTests.cs" />
     <Compile Include="Dices\DiceExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spatial\LazyHexMapTests.cs" />

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using Zilon.Core.Dices;
 
 namespace Zilon.Core.Combat
@@ -18,13 +18,21 @@ namespace Zilon.Core.Combat
             var eventList = new List<ICombatEvent>();
             foreach (var person in squad.Persons)
             {
-                if (person.HitPoints > 0)
+                if (person.HitPoints <= 0)
                 {
                     continue;
                 }
 
                 var personEvents = UseSkillByPerson(person, target);
                 eventList.AddRange(personEvents);
+            }
+
+            foreach (var targetPerson in target.Persons.ToArray())
+            {
+                if (targetPerson.HitPoints <= 0)
+                {
+                    target.RemovePerson(targetPerson);
+                }
             }
 
             return eventList;
