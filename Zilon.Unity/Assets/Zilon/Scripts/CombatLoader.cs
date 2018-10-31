@@ -54,7 +54,7 @@ public class CombatLoader : MonoBehaviour
 
             var position = HexHelper.ConvertToWorld(node.Offset.X, node.Offset.Y);
 
-            hexObject.transform.position = new Vector3(position[0] * 20, position[1] / 2 * 20, 0);
+            hexObject.transform.position = new Vector3(position[0] * 20, position[1] * 20, 0);
 
             hexObject.Init(node);
 
