@@ -16,7 +16,5 @@ namespace Zilon.Core.Combat
         Player Player { get; }
 
         void MoveToNode(ITerrainNode targetNode);
-
-        void UseSkill(ICombatSquad targetSquad);
     }
 }

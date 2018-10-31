@@ -24,17 +24,6 @@ namespace Zilon.Core.Combat
             Node = targetNode;
         }
 
-        public void UseSkill(ICombatSquad targetSquad)
-        {
-            foreach (var person in Persons)
-            {
-                if (person.HitPoints > 0)
-                {
-                    person.UseSkill(targetSquad);
-                }
-            }
-        }
-
         public Player Player { get; }
 
         public ICombatPerson[] Persons { get; }

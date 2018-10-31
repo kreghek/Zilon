@@ -51,11 +51,16 @@
     <Compile Include="ClientState\ICombatStateManager.cs" />
     <Compile Include="ClientState\IGlobalStateManager.cs" />
     <Compile Include="ClientState\ITerrainNodeClientModel.cs" />
+    <Compile Include="Combat\AttackCombatEvent.cs" />
+    <Compile Include="Combat\CombatEventBus.cs" />
     <Compile Include="Combat\CombatPerson.cs" />
+    <Compile Include="Combat\CombatService.cs" />
     <Compile Include="Combat\CombatSquad.cs" />
+    <Compile Include="Combat\ICombatEvent.cs" />
+    <Compile Include="Combat\ICombatEventBus.cs" />
     <Compile Include="Combat\ICombatPerson.cs" />
+    <Compile Include="Combat\ICombatService.cs" />
     <Compile Include="Combat\ICombatSquad.cs" />
-    <Compile Include="Combat\SkillUsedEventArgs.cs" />
     <Compile Include="Combat\TakeDamageEventArgs.cs" />
     <Compile Include="Commands\ISquadAttackCommand.cs" />
     <Compile Include="Commands\ISquadMoveCommand.cs" />
