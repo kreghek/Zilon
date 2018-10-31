@@ -49,7 +49,7 @@ namespace Zilon.Core.Tests.Combat
             }
         }
 
-        private void AddPersonsToSquadMock(Mock<ICombatSquad> squadMock)
+        private static void AddPersonsToSquadMock(Mock<ICombatSquad> squadMock)
         {
             squadMock.SetupGet(x => x.Persons).Returns(new[]
             {
