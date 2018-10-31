@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 using UnityEngine;
 
 using Zenject;
@@ -14,37 +16,40 @@ using Zilon.Core.NameGeneration;
 using Zilon.Core.Players;
 using Zilon.Core.Spatial;
 
+// ReSharper disable CheckNamespace
+
+[UsedImplicitly]
 public class CombatLoader : MonoBehaviour
 {
-    public CombatTerrainNode HexPrefab;
-    public CombatSquadModel CombatSquadPrefab;
-    public CombatPersonModel CompatPersonPrefab;
-    public ShootFlash ShootFlashPrefab;
-    public BulletTracer ShootTracerPrefab;
-    public Transform Parent;
+    [UsedImplicitly] [Inject] private readonly ISquadAttackCommand _attackCommand;
 
-    private readonly List<CombatTerrainNode> nodeModels;
+    [UsedImplicitly] [Inject] private readonly ICombatEventBus _combatEventBus;
+
+    [UsedImplicitly] [Inject] private readonly ICombatStateManager _combatStateManager;
+
+    [UsedImplicitly] [Inject] private readonly ICommandManager _commandManager;
+
+    [UsedImplicitly] [Inject] private readonly IDice _dice;
+
+    [UsedImplicitly] [Inject] private readonly ISquadMoveCommand _moveCommand;
+
+    private readonly List<CombatTerrainNode> _nodeModels;
     private readonly List<CombatSquadModel> _squadModels;
 
-    [Inject] private ICommandManager _commandManager;
-
-    [Inject] public ICombatStateManager _combatStateManager;
-
-    [Inject] private readonly ISquadMoveCommand _moveCommand;
-
-    [Inject] private readonly ISquadAttackCommand _attackCommand;
-
-    [Inject] private readonly IDice _dice;
-
-    [Inject] private readonly ICombatEventBus _combatEventBus;
+    public CombatSquadModel CombatSquadPrefab;
+    public CombatPersonModel CompatPersonPrefab;
+    public CombatTerrainNode HexPrefab;
+    public Transform Parent;
+    public ShootFlash ShootFlashPrefab;
+    public BulletTracer ShootTracerPrefab;
 
     public CombatLoader()
     {
-        nodeModels = new List<CombatTerrainNode>();
+        _nodeModels = new List<CombatTerrainNode>();
         _squadModels = new List<CombatSquadModel>();
     }
 
-    // Start is called before the first frame update
+    [UsedImplicitly]
     private void Start()
     {
         var map = new FixedMap(25);
@@ -58,7 +63,7 @@ public class CombatLoader : MonoBehaviour
 
             hexObject.Init(node);
 
-            nodeModels.Add(hexObject);
+            _nodeModels.Add(hexObject);
 
             hexObject.Clicked += HexObject_Clicked;
         }
@@ -102,6 +107,7 @@ public class CombatLoader : MonoBehaviour
 
                 combatPersonModel.Init(combatPerson);
             }
+
             squadObject.Init(squad, personModelList.ToArray());
             _squadModels.Add(squadObject);
         }
@@ -180,7 +186,7 @@ public class CombatLoader : MonoBehaviour
     private void CombatPersonModelOnClicked(object sender, EventArgs e)
     {
         ISquadClientModel clickedSquad = null;
-        var combatPersonModel = (CombatPersonModel)sender;
+        var combatPersonModel = (CombatPersonModel) sender;
         foreach (var combatSquadModel in _squadModels)
         {
             foreach (var personModel in combatSquadModel.PersonModels)
@@ -215,7 +221,7 @@ public class CombatLoader : MonoBehaviour
 
     private void HexObject_Clicked(object sender, EventArgs e)
     {
-        var nodeModel = (CombatTerrainNode)sender;
+        var nodeModel = (CombatTerrainNode) sender;
         _combatStateManager.HoverNode = nodeModel;
         if (_combatStateManager.SelectedSquad != null)
         {
@@ -223,12 +229,12 @@ public class CombatLoader : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    [UsedImplicitly]
     private void Update()
     {
         foreach (var squad in _squadModels)
         {
-            var nodeModel = nodeModels.Single(x => x.Node == squad.Squad.Node);
+            var nodeModel = _nodeModels.Single(x => x.Node == squad.Squad.Node);
             squad.transform.position = nodeModel.transform.position;
         }
     }
@@ -246,7 +252,6 @@ public class CombatLoader : MonoBehaviour
         tracer.fromPosition = fromPosition;
         tracer.targetPosition = targetPosition;
     }
-
 
 
     public static void ShakeCamera(float intensity, float timer)
