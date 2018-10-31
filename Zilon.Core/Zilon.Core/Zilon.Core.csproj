@@ -71,6 +71,8 @@
     <Compile Include="Dices\IDice.cs" />
     <Compile Include="GlobalMap\Army.cs" />
     <Compile Include="GlobalMap\IMapEntity.cs" />
+    <Compile Include="NameGeneration\IdNameGenerator.cs" />
+    <Compile Include="NameGeneration\IPersonNameGenerator.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spatial\CubeCoords.cs" />

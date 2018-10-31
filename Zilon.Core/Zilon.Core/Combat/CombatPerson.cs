@@ -3,26 +3,23 @@
 using JetBrains.Annotations;
 
 using Zilon.Core.Dices;
+using Zilon.Core.NameGeneration;
 
 namespace Zilon.Core.Combat
 {
     [PublicAPI]
     public class CombatPerson : ICombatPerson
     {
-        private static int id;
-
-        private int currentId;
-
         private readonly IDice _dice;
+        private readonly string _name;
 
-        public CombatPerson(IDice dice)
+        public CombatPerson(IDice dice, IPersonNameGenerator nameGenerator)
         {
             _dice = dice ?? throw new ArgumentNullException(nameof(dice));
 
-            HitPoints = 10;
+            _name = nameGenerator.CreateName();
 
-            id++;
-            currentId = id;
+            HitPoints = 10;
         }
 
         public int HitPoints { get; private set; }
@@ -59,6 +56,11 @@ namespace Zilon.Core.Combat
         {
             var eventArgs = new TakeDamageEventArgs(value, isDead);
             TakenDamage?.Invoke(this, eventArgs);
+        }
+
+        public override string ToString()
+        {
+            return $"{_name}";
         }
     }
 }
