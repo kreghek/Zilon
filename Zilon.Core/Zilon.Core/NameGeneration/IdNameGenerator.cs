@@ -1,5 +1,8 @@
-﻿namespace Zilon.Core.NameGeneration
+﻿using JetBrains.Annotations;
+
+namespace Zilon.Core.NameGeneration
 {
+    [PublicAPI]
     public class IdNameGenerator : IPersonNameGenerator
     {
         private static int _id;
