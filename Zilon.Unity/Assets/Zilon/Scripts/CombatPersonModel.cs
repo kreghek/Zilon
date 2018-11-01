@@ -1,8 +1,9 @@
 ﻿using System;
-
+using JetBrains.Annotations;
 using UnityEngine;
 
 using Zilon.Core.Combat;
+// ReSharper disable CheckNamespace
 
 public class CombatPersonModel : MonoBehaviour
 {
@@ -13,11 +14,25 @@ public class CombatPersonModel : MonoBehaviour
     private bool _isDead;
 
     public event EventHandler Clicked;
-    public event EventHandler Dead;
+    public event EventHandler HoverEnter;
+    public event EventHandler HoverExit;
 
+    [UsedImplicitly]
     public void OnMouseDown()
     {
         Clicked?.Invoke(this, new EventArgs());
+    }
+
+    [UsedImplicitly]
+    public void OnMouseEnter()
+    {
+        HoverEnter?.Invoke(this, new EventArgs());
+    }
+
+    [UsedImplicitly]
+    public void OnMouseExit()
+    {
+        HoverExit?.Invoke(this, new EventArgs());
     }
 
     public void Init(ICombatPerson combatPerson)

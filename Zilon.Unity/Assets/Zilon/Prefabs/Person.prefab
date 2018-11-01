@@ -160,10 +160,6 @@ MonoBehaviour:
   Graphics: {fileID: 3554207753390960292}
   CorpsePrefab: {fileID: 5964899952574561086, guid: 2e4a7ed626854574eb89f4228f2fdc2e,
     type: 3}
-  ShootFlashPrefab: {fileID: 4929924702287403607, guid: 6ca630d5e7ec15f45864b3fd6479e4c8,
-    type: 3}
-  ShootTracerPrefab: {fileID: 1512823820853099769, guid: 08514f308e4901c42a783876e06daaec,
-    type: 3}
 --- !u!70 &6210831685527738720
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -68,6 +68,7 @@ public class CombatLoader : MonoBehaviour
             _nodeModels.Add(hexObject);
 
             hexObject.Clicked += HexObject_Clicked;
+            hexObject.Hover += HexObjectOnHover;
         }
 
         var nameGenerator = new IdNameGenerator();
@@ -106,6 +107,8 @@ public class CombatLoader : MonoBehaviour
                 combatPersonModel.transform.position = new Vector3(personX * 1.5f, personY * 1.5f);
 
                 combatPersonModel.Clicked += CombatPersonModelOnClicked;
+                combatPersonModel.HoverEnter += CombatPersonModelOnHoverEnter;
+                combatPersonModel.HoverExit += CombatPersonModelOnHoverExit;
 
                 combatPersonModel.Init(combatPerson);
             }
@@ -115,6 +118,29 @@ public class CombatLoader : MonoBehaviour
         }
 
         _combatEventBus.EventRegistered += CombatEventBusOnEventRegistered;
+    }
+
+    private void CombatPersonModelOnHoverExit(object sender, EventArgs e)
+    {
+        var hoverPersonModel = (CombatPersonModel)sender;
+        var clickedSquadModel = FindSquadClientModel(hoverPersonModel);
+
+        if (clickedSquadModel == _combatStateManager.HoverSquad)
+        {
+            _combatStateManager.HoverSquad = null;
+        }
+    }
+
+    private void HexObjectOnHover(object sender, EventArgs e)
+    {
+        //_combatStateManager.HoverSquad = null;
+    }
+
+    private void CombatPersonModelOnHoverEnter(object sender, EventArgs e)
+    {
+        var hoverPersonModel = (CombatPersonModel) sender;
+        var clickedSquadModel = FindSquadClientModel(hoverPersonModel);
+        _combatStateManager.HoverSquad = clickedSquadModel;
     }
 
     private void CombatEventBusOnEventRegistered(object sender, EventArgs e)
@@ -173,8 +199,27 @@ public class CombatLoader : MonoBehaviour
 
     private void CombatPersonModelOnClicked(object sender, EventArgs e)
     {
+        var combatPersonModel = (CombatPersonModel)sender;
+        var clickedSquad = FindSquadClientModel(combatPersonModel);
+
+        if (clickedSquad?.Squad.Player == Player.Human)
+        {
+            _combatStateManager.SelectedSquad = clickedSquad;
+        }
+        else
+        {
+            if (_combatStateManager.SelectedSquad != null)
+            {
+                _combatStateManager.HoverSquad = clickedSquad;
+
+                _commandManager.RegisterCommand(_attackCommand);
+            }
+        }
+    }
+
+    private ISquadClientModel FindSquadClientModel(CombatPersonModel combatPersonModel)
+    {
         ISquadClientModel clickedSquad = null;
-        var combatPersonModel = (CombatPersonModel) sender;
         foreach (var combatSquadModel in _squadModels)
         {
             foreach (var personModel in combatSquadModel.PersonModels)
@@ -192,19 +237,7 @@ public class CombatLoader : MonoBehaviour
             }
         }
 
-        if (clickedSquad?.Squad.Player == Player.Human)
-        {
-            _combatStateManager.SelectedSquad = clickedSquad;
-        }
-        else
-        {
-            if (_combatStateManager.SelectedSquad != null)
-            {
-                _combatStateManager.HoverSquad = clickedSquad;
-
-                _commandManager.RegisterCommand(_attackCommand);
-            }
-        }
+        return clickedSquad;
     }
 
     private void HexObject_Clicked(object sender, EventArgs e)

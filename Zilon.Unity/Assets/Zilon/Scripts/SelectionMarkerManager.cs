@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using JetBrains.Annotations;
@@ -43,8 +44,14 @@ public class SelectionMarkerManager : MonoBehaviour
     {
         var highlightData = _highlight[type];
 
-        if (highlightData.LastSquadModel != squadModel)
+        if (squadModel == null)
         {
+            ClearMarkers(highlightData);
+        }
+        else if (highlightData.LastSquadModel != squadModel)
+        {
+            ClearMarkers(highlightData);
+
             var personModels = FindObjectsOfType<CombatPersonModel>();
             foreach (var combatPerson in squadModel.Squad.Persons)
             {
@@ -56,15 +63,25 @@ public class SelectionMarkerManager : MonoBehaviour
 
             highlightData.LastSquadModel = squadModel;
         }
-        else if (squadModel == null)
+    }
+
+    private static void ClearMarkers(HighlightData highlightData)
+    {
+        foreach (var selectionMarker in highlightData.Markers)
         {
-            foreach (var selectionMarker in highlightData.Markers)
+            try
             {
                 Destroy(selectionMarker.gameObject);
             }
-
-            highlightData.Markers.Clear();
+            catch (MissingReferenceException)
+            {
+                // Значит маркер был уничтожен вместе с персонажем
+            }
         }
+
+        highlightData.Markers.Clear();
+
+        highlightData.LastSquadModel = null;
     }
 
     private enum HighlightType
