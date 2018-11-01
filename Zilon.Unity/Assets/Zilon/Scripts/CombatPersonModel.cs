@@ -1,5 +1,7 @@
 ﻿using System;
+
 using JetBrains.Annotations;
+
 using UnityEngine;
 
 using Zilon.Core.Combat;
@@ -11,7 +13,6 @@ public class CombatPersonModel : MonoBehaviour
     public GameObject CorpsePrefab;
 
     public ICombatPerson CombatPerson { get; private set; }
-    private bool _isDead;
 
     public event EventHandler Clicked;
     public event EventHandler HoverEnter;

@@ -273,8 +273,8 @@ public class CombatLoader : MonoBehaviour
     private void CreateWeaponTracer(Vector3 fromPosition, Vector3 targetPosition)
     {
         var tracer = Instantiate(ShootTracerPrefab, Parent);
-        tracer.fromPosition = fromPosition;
-        tracer.targetPosition = targetPosition;
+        tracer.FromPosition = fromPosition;
+        tracer.TargetPosition = targetPosition;
     }
 
 

@@ -1,40 +1,30 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
+// ReSharper disable CheckNamespace
 
 public class BulletTracer : MonoBehaviour
 {
-    int frame = 0;
-    float framerate = .016f;
-    float timer;
+    private float _counter = 0.05f;
 
-    public Vector3 targetPosition;
-    public Vector3 fromPosition;
-    public LineRenderer lineRenderer;
+    public LineRenderer LineRenderer;
 
-    void Start()
+    public Vector3 TargetPosition { get; set; }
+    public Vector3 FromPosition { get; set; }
+
+    [UsedImplicitly]
+    public void Start()
     {
-        lineRenderer.SetPosition(0, fromPosition + Vector3.back * 5);
-        lineRenderer.SetPosition(1, targetPosition + Vector3.back * 5);
-
-        timer = framerate;
+        LineRenderer.SetPosition(0, FromPosition + Vector3.back * 5);
+        LineRenderer.SetPosition(1, TargetPosition + Vector3.back * 5);
     }
 
-    
-    void Update()
+    [UsedImplicitly]
+    public void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0)
+        _counter -= Time.deltaTime;
+        if (_counter <= 0)
         {
-            frame++;
-            timer += framerate;
-            if (frame >= 4)
-            {
-                Destroy(gameObject);
-                
-            }
-            else
-            {
-                //worldMesh.SetUVCoords(new World_Mesh.UVCoords(16 * frame, 0, 16, 256));
-            }
+            Destroy(gameObject);
         }
     }
 }

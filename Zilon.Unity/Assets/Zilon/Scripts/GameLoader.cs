@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
+using JetBrains.Annotations;
 using UnityEngine;
 
 using Zenject;
@@ -13,26 +13,27 @@ using Zilon.Core.Spatial;
 
 public class GameLoader : MonoBehaviour
 {
-    [Inject] private ICommandManager _commandManager;
+    [UsedImplicitly] [Inject] private readonly ICommandManager _commandManager;
 
-    [Inject] private IGlobalStateManager _globalStateManager;
+    [UsedImplicitly] [Inject] private readonly IGlobalStateManager _globalStateManager;
 
-    [Inject] private IArmyModeCommand _moveCommand;
+    [UsedImplicitly] [Inject] private readonly IArmyModeCommand _moveCommand;
 
     public GameObject HexPrefab;
     public GlobalArmy ArmyPrefab;
     public Transform Parent;
 
-    private readonly List<GlobalTerrainNode> nodeModels;
-    private readonly List<GlobalArmy> armyModels;
+    private readonly List<GlobalTerrainNode> _nodeModels;
+    private readonly List<GlobalArmy> _armyModels;
 
     public GameLoader()
     {
-        nodeModels = new List<GlobalTerrainNode>();
-        armyModels = new List<GlobalArmy>();
+        _nodeModels = new List<GlobalTerrainNode>();
+        _armyModels = new List<GlobalArmy>();
     }
 
-    void Start()
+    [UsedImplicitly]
+    public void Start()
     {
         var map = new LazyHexMap(100);
         foreach (var node in map.Nodes)
@@ -46,7 +47,7 @@ public class GameLoader : MonoBehaviour
             var clientModel = hexObject.GetComponent<GlobalTerrainNode>();
             clientModel.Init(node);
 
-            nodeModels.Add(clientModel);
+            _nodeModels.Add(clientModel);
 
             clientModel.Clicked += ClientModel_Clicked;
         }
@@ -56,14 +57,16 @@ public class GameLoader : MonoBehaviour
         armyObject.Init(army);
         armyObject.Clicked += ArmyObject_Clicked;
 
-        armyModels.Add(armyObject);
+        _armyModels.Add(armyObject);
     }
 
-    void Update()
+
+    [UsedImplicitly]
+    public void Update()
     {
-        foreach (var globalArmy in armyModels)
+        foreach (var globalArmy in _armyModels)
         {
-            var nodeModel = nodeModels.Single(x => x.Node == globalArmy.Army.Node);
+            var nodeModel = _nodeModels.Single(x => x.Node == globalArmy.Army.Node);
             globalArmy.transform.position = nodeModel.transform.position;
         }
     }
