@@ -25,13 +25,13 @@ public class CombatLoader : MonoBehaviour
 
     [UsedImplicitly] [Inject] private readonly ICombatEventBus _combatEventBus;
 
+    [UsedImplicitly] [Inject] private readonly ICombatService _combatService;
+
     [UsedImplicitly] [Inject] private readonly ICombatStateManager _combatStateManager;
 
     [UsedImplicitly] [Inject] private readonly ICommandManager _commandManager;
 
     [UsedImplicitly] [Inject] private readonly IDice _dice;
-
-    [UsedImplicitly] [Inject] private readonly ICombatService _combatService;
 
     [UsedImplicitly] [Inject] private readonly ISquadMoveCommand _moveCommand;
 
@@ -122,7 +122,7 @@ public class CombatLoader : MonoBehaviour
 
     private void CombatPersonModelOnHoverExit(object sender, EventArgs e)
     {
-        var hoverPersonModel = (CombatPersonModel)sender;
+        var hoverPersonModel = (CombatPersonModel) sender;
         var clickedSquadModel = FindSquadClientModel(hoverPersonModel);
 
         if (clickedSquadModel == _combatStateManager.HoverSquad)
@@ -199,7 +199,7 @@ public class CombatLoader : MonoBehaviour
 
     private void CombatPersonModelOnClicked(object sender, EventArgs e)
     {
-        var combatPersonModel = (CombatPersonModel)sender;
+        var combatPersonModel = (CombatPersonModel) sender;
         var clickedSquad = FindSquadClientModel(combatPersonModel);
 
         if (clickedSquad?.Squad.Player == Player.Human)
