@@ -425,6 +425,8 @@ MonoBehaviour:
     type: 3}
   ShootTracerPrefab: {fileID: 180982156575201707, guid: 08514f308e4901c42a783876e06daaec,
     type: 3}
+  WallPrefab: {fileID: 3725834436989036507, guid: bb20506819684e143b2a099865c4eef5,
+    type: 3}
 --- !u!114 &825974232
 MonoBehaviour:
   m_ObjectHideFlags: 0

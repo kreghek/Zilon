@@ -15,6 +15,7 @@ using Zilon.Core.Dices;
 using Zilon.Core.NameGeneration;
 using Zilon.Core.Players;
 using Zilon.Core.Spatial;
+using Random = System.Random;
 
 // ReSharper disable CheckNamespace
 
@@ -44,6 +45,7 @@ public class CombatLoader : MonoBehaviour
     public Transform Parent;
     public ShootFlash ShootFlashPrefab;
     public BulletTracer ShootTracerPrefab;
+    public GameObject WallPrefab;
 
     public CombatLoader()
     {
@@ -68,6 +70,15 @@ public class CombatLoader : MonoBehaviour
             _nodeModels.Add(hexObject);
 
             hexObject.Clicked += HexObject_Clicked;
+
+            if (UnityEngine.Random.Range(0, 100) > 70)
+            {
+                for (var i = 0; i < UnityEngine.Random.Range(3, 7); i++)
+                {
+                    var wallObject = Instantiate(WallPrefab, hexObject.transform);
+                    wallObject.transform.localPosition = UnityEngine.Random.insideUnitCircle * 5;
+                }
+            }
         }
 
         var nameGenerator = new IdNameGenerator();
