@@ -7,7 +7,8 @@ namespace Zilon.Core.NameGeneration
     {
         private static int _id;
 
-        public string CreateName() {
+        public string CreateName()
+        {
             _id++;
             return _id.ToString();
         }
