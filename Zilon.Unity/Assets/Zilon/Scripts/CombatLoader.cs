@@ -68,7 +68,6 @@ public class CombatLoader : MonoBehaviour
             _nodeModels.Add(hexObject);
 
             hexObject.Clicked += HexObject_Clicked;
-            hexObject.Hover += HexObjectOnHover;
         }
 
         var nameGenerator = new IdNameGenerator();
@@ -131,11 +130,6 @@ public class CombatLoader : MonoBehaviour
         }
     }
 
-    private void HexObjectOnHover(object sender, EventArgs e)
-    {
-        //_combatStateManager.HoverSquad = null;
-    }
-
     private void CombatPersonModelOnHoverEnter(object sender, EventArgs e)
     {
         var hoverPersonModel = (CombatPersonModel) sender;
@@ -151,20 +145,7 @@ public class CombatLoader : MonoBehaviour
         foreach (var combatEvent in combatEvents)
         {
             var senderPerson = combatEvent.Sender;
-            if (combatEvent is AttackCombatEvent attackEvent)
-            {
-                var senderModel = FindCombatPersonModel(senderPerson);
-                var targetModel = FindCombatPersonModel(attackEvent.Target);
-
-                CreateWeaponTracer(senderModel.transform.position, targetModel.transform.position);
-                CreateShootFlash(senderModel.transform.position);
-                ShakeCamera(.5f, .05f);
-
-                if (attackEvent.TargetIsDead)
-                {
-                    deadPersonModels.Add(targetModel);
-                }
-            }
+            ProcessAttackEvent(combatEvent, senderPerson, deadPersonModels);
         }
 
         foreach (var combatPersonModel in deadPersonModels)
@@ -178,6 +159,27 @@ public class CombatLoader : MonoBehaviour
                     combatSquadModel.DeadPerson(combatPersonModel);
                 }
             }
+        }
+    }
+
+    private void ProcessAttackEvent(ICombatEvent combatEvent, ICombatPerson senderPerson,
+        HashSet<CombatPersonModel> deadPersonModels)
+    {
+        if (!(combatEvent is AttackCombatEvent attackEvent))
+        {
+            return;
+        }
+
+        var senderModel = FindCombatPersonModel(senderPerson);
+        var targetModel = FindCombatPersonModel(attackEvent.Target);
+
+        CreateWeaponTracer(senderModel.transform.position, targetModel.transform.position);
+        CreateShootFlash(senderModel.transform.position);
+        ShakeCamera(.5f, .05f);
+
+        if (attackEvent.TargetIsDead)
+        {
+            deadPersonModels.Add(targetModel);
         }
     }
 
