@@ -80,9 +80,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Zilon.Core\Zilon.Core.csproj">
+    <ProjectReference Include="..\Zilon.Core\Zilon.Core2.csproj">
       <Project>{93535D50-1359-4585-86DC-D2B84E29CC54}</Project>
-      <Name>Zilon.Core</Name>
+      <Name>Zilon.Core2</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

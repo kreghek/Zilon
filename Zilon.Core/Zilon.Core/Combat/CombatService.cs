@@ -3,6 +3,7 @@ using System.Linq;
 
 using JetBrains.Annotations;
 
+using Zilon.Core.Common;
 using Zilon.Core.Dices;
 
 namespace Zilon.Core.Combat
@@ -11,10 +12,13 @@ namespace Zilon.Core.Combat
     {
         private readonly IDice _dice;
 
-        public CombatService(IDice dice)
+        public CombatService(IDice dice, IEntityManager<ICombatSquad> squadManager)
         {
             _dice = dice;
+            SquadManager = squadManager;
         }
+
+        public IEntityManager<ICombatSquad> SquadManager { get; }
 
         [ItemNotNull]
         public IEnumerable<ICombatEvent> UseSkill(ICombatSquad squad, ICombatSquad target)

@@ -71,6 +71,9 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandManager.cs" />
     <Compile Include="Commands\QueueCommandManager.cs" />
+    <Compile Include="Common\EntityManager.cs" />
+    <Compile Include="Common\IEntityManager.cs" />
+    <Compile Include="Common\ManagerItemsChangedEventArgs.cs" />
     <Compile Include="Dices\Dice.cs" />
     <Compile Include="Dices\DiceExtensions.cs" />
     <Compile Include="Dices\IDice.cs" />

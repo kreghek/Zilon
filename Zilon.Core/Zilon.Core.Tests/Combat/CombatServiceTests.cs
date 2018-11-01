@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 
 using Zilon.Core.Combat;
+using Zilon.Core.Common;
 using Zilon.Core.Dices;
 
 namespace Zilon.Core.Tests.Combat
@@ -32,7 +33,10 @@ namespace Zilon.Core.Tests.Combat
             AddPersonsToSquadMock(targetSquadMock);
             var targetSquad = targetSquadMock.Object;
 
-            var combatService = new CombatService(dice);
+            var squadManagerMock = new Mock<IEntityManager<ICombatSquad>>();
+            var squadManager = squadManagerMock.Object;
+
+            var combatService = new CombatService(dice, squadManager);
 
 
 
