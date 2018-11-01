@@ -5,7 +5,7 @@ namespace Zilon.Core.NameGeneration
     [PublicAPI]
     public class IdNameGenerator : IPersonNameGenerator
     {
-        private static int _id;
+        private int _id;
 
         public string CreateName()
         {

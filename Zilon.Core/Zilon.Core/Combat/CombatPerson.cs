@@ -10,13 +10,10 @@ namespace Zilon.Core.Combat
     [PublicAPI]
     public class CombatPerson : ICombatPerson
     {
-        private readonly IDice _dice;
         private readonly string _name;
 
-        public CombatPerson(IDice dice, IPersonNameGenerator nameGenerator)
+        public CombatPerson(IPersonNameGenerator nameGenerator)
         {
-            _dice = dice ?? throw new ArgumentNullException(nameof(dice));
-
             _name = nameGenerator.CreateName();
 
             HitPoints = 10;
