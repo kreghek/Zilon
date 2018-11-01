@@ -31,6 +31,8 @@ public class CombatLoader : MonoBehaviour
 
     [UsedImplicitly] [Inject] private readonly IDice _dice;
 
+    [UsedImplicitly] [Inject] private readonly ICombatService _combatService;
+
     [UsedImplicitly] [Inject] private readonly ISquadMoveCommand _moveCommand;
 
     private readonly List<CombatTerrainNode> _nodeModels;
@@ -77,11 +79,12 @@ public class CombatLoader : MonoBehaviour
 
             for (var j = 0; j < 5; j++)
             {
-                var person = new CombatPerson(_dice, nameGenerator);
+                var person = new CombatPerson(nameGenerator);
                 personList.Add(person);
             }
 
             var squad = new CombatSquad(node, personList.ToArray(), i < 2 ? Player.Human : Player.Cpu);
+            _combatService.SquadManager.Add(squad);
 
             var squadObject = Instantiate(CombatSquadPrefab, Parent);
             var personModelList = new List<CombatPersonModel>();
@@ -103,7 +106,6 @@ public class CombatLoader : MonoBehaviour
                 combatPersonModel.transform.position = new Vector3(personX * 1.5f, personY * 1.5f);
 
                 combatPersonModel.Clicked += CombatPersonModelOnClicked;
-                combatPersonModel.Dead += CombatPersonModelOnDead;
 
                 combatPersonModel.Init(combatPerson);
             }
@@ -169,20 +171,6 @@ public class CombatLoader : MonoBehaviour
         throw new InvalidOperationException();
     }
 
-    private void CombatPersonModelOnDead(object sender, EventArgs e)
-    {
-        foreach (var combatSquadModel in _squadModels)
-        {
-            foreach (var combatPersonModel in combatSquadModel.PersonModels)
-            {
-                if (combatPersonModel.CombatPerson == sender)
-                {
-                    combatSquadModel.DeadPerson(combatPersonModel);
-                }
-            }
-        }
-    }
-
     private void CombatPersonModelOnClicked(object sender, EventArgs e)
     {
         ISquadClientModel clickedSquad = null;
@@ -225,7 +213,10 @@ public class CombatLoader : MonoBehaviour
         _combatStateManager.HoverNode = nodeModel;
         if (_combatStateManager.SelectedSquad != null)
         {
-            _commandManager.RegisterCommand(_moveCommand);
+            if (_moveCommand.CanExecute())
+            {
+                _commandManager.RegisterCommand(_moveCommand);
+            }
         }
     }
 

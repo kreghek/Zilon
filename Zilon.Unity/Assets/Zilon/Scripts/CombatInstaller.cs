@@ -3,7 +3,9 @@ using Zenject;
 using Zilon.Core.ClientState;
 using Zilon.Core.Combat;
 using Zilon.Core.Commands;
+using Zilon.Core.Common;
 using Zilon.Core.Dices;
+// ReSharper disable CheckNamespace
 
 public class CombatInstaller : MonoInstaller<CombatInstaller>
 {
@@ -16,5 +18,6 @@ public class CombatInstaller : MonoInstaller<CombatInstaller>
         Container.Bind<IDice>().To<Dice>().AsSingle();
         Container.Bind<ICombatEventBus>().To<CombatEventBus>().AsSingle();
         Container.Bind<ICombatService>().To<CombatService>().AsSingle();
+        Container.Bind<IEntityManager<ICombatSquad>>().To<EntityManager<ICombatSquad>>().AsSingle();
     }
 }
