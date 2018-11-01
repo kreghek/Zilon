@@ -21,39 +21,67 @@ public class SelectionMarkerManager : MonoBehaviour
     [UsedImplicitly]
     public SelectionMarker SelectionMarkerPrefab;
 
-    private readonly List<SelectionMarker> _markers;
-    private ISquadClientModel _lastSquadModel;
+    private readonly Dictionary<HighlightType, HighlightData> _highlight;
 
     public SelectionMarkerManager()
     {
-        _markers = new List<SelectionMarker>();
+        _highlight = new Dictionary<HighlightType, HighlightData>
+        {
+            { HighlightType.Own, new HighlightData() },
+            { HighlightType.Enemy, new HighlightData() }
+        };
     }
 
     [UsedImplicitly]
-    void Update()
+    public void Update()
     {
-        if (_lastSquadModel != _combatStateManager.SelectedSquad)
+        HighlightSquad(_combatStateManager.SelectedSquad, HighlightType.Own);
+        HighlightSquad(_combatStateManager.HoverSquad, HighlightType.Enemy);
+    }
+
+    private void HighlightSquad(ISquadClientModel squadModel, HighlightType type)
+    {
+        var highlightData = _highlight[type];
+
+        if (highlightData.LastSquadModel != squadModel)
         {
             var personModels = FindObjectsOfType<CombatPersonModel>();
-            foreach (var combatPerson in _combatStateManager.SelectedSquad.Squad.Persons)
+            foreach (var combatPerson in squadModel.Squad.Persons)
             {
                 var model = personModels.Single(x => x.CombatPerson == combatPerson);
                 var marker = Instantiate(SelectionMarkerPrefab, model.transform);
-                _markers.Add(marker);
+                highlightData.Markers.Add(marker);
 
             }
 
-            _lastSquadModel = _combatStateManager.SelectedSquad;
+            highlightData.LastSquadModel = squadModel;
         }
-        else if (_combatStateManager.SelectedSquad == null)
+        else if (squadModel == null)
         {
-            foreach (var selectionMarker in _markers)
+            foreach (var selectionMarker in highlightData.Markers)
             {
                 Destroy(selectionMarker.gameObject);
             }
 
-            _markers.Clear();
+            highlightData.Markers.Clear();
         }
+    }
 
+    private enum HighlightType
+    {
+        Own,
+        Enemy
+    }
+
+    private class HighlightData
+    {
+        public ISquadClientModel LastSquadModel;
+
+        public readonly List<SelectionMarker> Markers;
+
+        public HighlightData()
+        {
+            Markers = new List<SelectionMarker>();
+        }
     }
 }
