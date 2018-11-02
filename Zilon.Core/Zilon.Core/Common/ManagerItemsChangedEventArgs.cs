@@ -1,5 +1,7 @@
 ﻿using System;
 
+using JetBrains.Annotations;
+
 namespace Zilon.Core.Common
 {
     public sealed class ManagerItemsChangedEventArgs<TItem> : EventArgs
@@ -9,6 +11,7 @@ namespace Zilon.Core.Common
             Items = items ?? throw new ArgumentNullException(nameof(items));
         }
 
+        [PublicAPI]
         public TItem[] Items { get; }
     }
 }

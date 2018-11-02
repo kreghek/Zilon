@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 namespace Zilon.Core.Common
 {
     /// <summary>
@@ -9,8 +11,9 @@ namespace Zilon.Core.Common
     /// </summary>
     /// <typeparam name="TCombatEntity">
     /// Тип сущности сектора.
-    /// См описание <see cref="IEntityManager">IEntityManager</see>.
+    /// См описание <see cref="IEntityManager{TCombatEntity}">IEntityManager</see>.
     /// </typeparam>
+    [PublicAPI]
     public class EntityManager<TCombatEntity> : IEntityManager<TCombatEntity> where TCombatEntity : class
     {
         private readonly List<TCombatEntity> _items;
