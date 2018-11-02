@@ -2,7 +2,6 @@
 
 using JetBrains.Annotations;
 
-using Zilon.Core.Dices;
 using Zilon.Core.NameGeneration;
 
 namespace Zilon.Core.Combat

@@ -43,6 +43,11 @@ namespace Zilon.Core.Combat
                 }
             }
 
+            if (!target.Persons.Any())
+            {
+                SquadManager.Remove(target);
+            }
+
             return eventList;
         }
 
