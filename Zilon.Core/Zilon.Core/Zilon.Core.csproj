@@ -34,6 +34,9 @@
       <HintPath>..\packages\JetBrains.Annotations.2018.2.1\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +64,7 @@
     <Compile Include="Combat\ICombatPerson.cs" />
     <Compile Include="Combat\ICombatService.cs" />
     <Compile Include="Combat\ICombatSquad.cs" />
+    <Compile Include="Dices\ISkillUsageRandomSource.cs" />
     <Compile Include="Combat\TakeDamageEventArgs.cs" />
     <Compile Include="Commands\ISquadAttackCommand.cs" />
     <Compile Include="Commands\ISquadMoveCommand.cs" />
@@ -77,6 +81,8 @@
     <Compile Include="Dices\Dice.cs" />
     <Compile Include="Dices\DiceExtensions.cs" />
     <Compile Include="Dices\IDice.cs" />
+    <Compile Include="Dices\Roll.cs" />
+    <Compile Include="Dices\RollModifiers.cs" />
     <Compile Include="GlobalMap\Army.cs" />
     <Compile Include="GlobalMap\IMapEntity.cs" />
     <Compile Include="NameGeneration\IdNameGenerator.cs" />

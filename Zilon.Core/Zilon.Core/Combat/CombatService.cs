@@ -10,11 +10,13 @@ namespace Zilon.Core.Combat
 {
     public class CombatService : ICombatService
     {
-        private readonly IDice _dice;
+        private readonly ISkillUsageRandomSource _skillUsageRandomSource;
 
-        public CombatService(IDice dice, IEntityManager<ICombatSquad> squadManager)
+        public CombatService(IEntityManager<ICombatSquad> squadManager,
+            ISkillUsageRandomSource skillUsageRandomSource)
         {
-            _dice = dice;
+            _skillUsageRandomSource = skillUsageRandomSource;
+
             SquadManager = squadManager;
         }
 
@@ -54,11 +56,10 @@ namespace Zilon.Core.Combat
         private IEnumerable<ICombatEvent> UseSkillByPerson(ICombatPerson person, ICombatSquad targetSquad)
         {
             var eventList = new List<ICombatEvent>();
+            ICombatPerson rolledPerson = SelectTargetPerson(targetSquad);
 
-            var rolledEnemyPersonIndex = _dice.Roll(0, targetSquad.Persons.Length - 1);
-            var rolledPerson = targetSquad.Persons[rolledEnemyPersonIndex];
-
-            var damage = _dice.Roll(2);
+            var efficientRoll = new Roll(3, 1);
+            var damage = _skillUsageRandomSource.RollEfficient(efficientRoll);
 
             rolledPerson.TakeDamage(damage);
 
@@ -67,6 +68,14 @@ namespace Zilon.Core.Combat
             eventList.Add(attackEvent);
 
             return eventList;
+        }
+
+        private ICombatPerson SelectTargetPerson(ICombatSquad targetSquad)
+        {
+            var personCount = targetSquad.Persons.Length;
+            var rolledEnemyPersonIndex = _skillUsageRandomSource.RollPersonIndex(personCount);
+            var rolledPerson = targetSquad.Persons[rolledEnemyPersonIndex];
+            return rolledPerson;
         }
     }
 }

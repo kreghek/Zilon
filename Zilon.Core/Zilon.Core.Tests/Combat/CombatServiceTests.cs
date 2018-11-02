@@ -21,9 +21,12 @@ namespace Zilon.Core.Tests.Combat
         [Test]
         public void UseSkill_PersonSquadAttacks_Returns5EventOfAttack()
         {
-            var diceMock = new Mock<IDice>();
-            diceMock.Setup(x => x.Roll(It.IsAny<int>())).Returns<int>(n => n / 2);
-            var dice = diceMock.Object;
+            var skillUsageRandomMock = new Mock<ISkillUsageRandomSource>();
+            skillUsageRandomMock.Setup(x => x.RollEfficient(It.IsAny<Roll>()))
+                .Returns<Roll>(roll => roll.Dice / 2);
+            skillUsageRandomMock.Setup(x => x.RollPersonIndex(It.IsAny<int>()))
+                .Returns<int>(personCount => 0);
+            var skillUsageRandom = skillUsageRandomMock.Object;
 
             var attackerSquadMock = new Mock<ICombatSquad>();
             AddPersonsToSquadMock(attackerSquadMock);
@@ -36,7 +39,7 @@ namespace Zilon.Core.Tests.Combat
             var squadManagerMock = new Mock<IEntityManager<ICombatSquad>>();
             var squadManager = squadManagerMock.Object;
 
-            var combatService = new CombatService(dice, squadManager);
+            var combatService = new CombatService(squadManager, skillUsageRandom);
 
 
 
