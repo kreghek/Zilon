@@ -86,6 +86,7 @@
     <Compile Include="Dices\IDice.cs" />
     <Compile Include="Dices\Roll.cs" />
     <Compile Include="Dices\RollModifiers.cs" />
+    <Compile Include="Dices\SkillUsageRandomSource.cs" />
     <Compile Include="GlobalMap\Army.cs" />
     <Compile Include="GlobalMap\IMapEntity.cs" />
     <Compile Include="NameGeneration\IdNameGenerator.cs" />

@@ -3,7 +3,9 @@
     public interface ISkillUsageRandomSource
     {
         int RollEfficient(Roll roll);
+
         int RollPersonIndex(int personCount);
+
         int RollToHit(Roll toHitDice);
     }
 }
