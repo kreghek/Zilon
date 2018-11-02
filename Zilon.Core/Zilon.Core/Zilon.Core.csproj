@@ -55,10 +55,13 @@
     <Compile Include="ClientState\IGlobalStateManager.cs" />
     <Compile Include="ClientState\ITerrainNodeClientModel.cs" />
     <Compile Include="Combat\AttackCombatEvent.cs" />
+    <Compile Include="Combat\AttackMissResult.cs" />
+    <Compile Include="Combat\AttackSuccessResult.cs" />
     <Compile Include="Combat\CombatEventBus.cs" />
     <Compile Include="Combat\CombatPerson.cs" />
     <Compile Include="Combat\CombatService.cs" />
     <Compile Include="Combat\CombatSquad.cs" />
+    <Compile Include="Combat\IAttackResult.cs" />
     <Compile Include="Combat\ICombatEvent.cs" />
     <Compile Include="Combat\ICombatEventBus.cs" />
     <Compile Include="Combat\ICombatPerson.cs" />

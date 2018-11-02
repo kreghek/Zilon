@@ -11,21 +11,17 @@ namespace Zilon.Core.Combat
         [ExcludeFromCodeCoverage]
         public AttackCombatEvent(ICombatPerson sender,
             ICombatPerson target,
-            bool targetIsDead,
-            int damage)
+            IAttackResult result)
         {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
             Target = target ?? throw new ArgumentNullException(nameof(target));
-            TargetIsDead = targetIsDead;
-            Damage = damage;
+            Result = result ?? throw new ArgumentNullException(nameof(result));
         }
 
         public ICombatPerson Sender { get; }
 
         public ICombatPerson Target { get; }
 
-        public bool TargetIsDead { get; }
-
-        public int Damage { get; }
+        public IAttackResult Result { get; }
     }
 }

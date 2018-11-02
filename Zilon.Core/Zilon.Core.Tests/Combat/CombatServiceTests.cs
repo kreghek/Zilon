@@ -24,6 +24,8 @@ namespace Zilon.Core.Tests.Combat
             var skillUsageRandomMock = new Mock<ISkillUsageRandomSource>();
             skillUsageRandomMock.Setup(x => x.RollEfficient(It.IsAny<Roll>()))
                 .Returns<Roll>(roll => roll.Dice / 2);
+            skillUsageRandomMock.Setup(x => x.RollToHit(It.IsAny<Roll>()))
+                .Returns<Roll>(roll => 5);
             skillUsageRandomMock.Setup(x => x.RollPersonIndex(It.IsAny<int>()))
                 .Returns<int>(personCount => 0);
             var skillUsageRandom = skillUsageRandomMock.Object;

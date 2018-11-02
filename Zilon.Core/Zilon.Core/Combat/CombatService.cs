@@ -58,12 +58,26 @@ namespace Zilon.Core.Combat
             var eventList = new List<ICombatEvent>();
             ICombatPerson rolledPerson = SelectTargetPerson(targetSquad);
 
-            var efficientRoll = new Roll(3, 1);
-            var damage = _skillUsageRandomSource.RollEfficient(efficientRoll);
+            IAttackResult attackResult;
 
-            rolledPerson.TakeDamage(damage);
+            var toHitDice = new Roll(6, 1);
+            var toHitRoll = _skillUsageRandomSource.RollToHit(toHitDice);
+            const int toHitRollSuccess = 4;
+            if (toHitRoll >= toHitRollSuccess)
+            {
+                var efficientRoll = new Roll(3, 1);
+                var damage = _skillUsageRandomSource.RollEfficient(efficientRoll);
 
-            var attackEvent = new AttackCombatEvent(person, rolledPerson, rolledPerson.HitPoints <= 0, damage);
+                rolledPerson.TakeDamage(damage);
+
+                attackResult = new AttackSuccessResult(damage, rolledPerson.HitPoints <= 0);
+            }
+            else
+            {
+                attackResult = new AttackMissResult();
+            }
+
+            var attackEvent = new AttackCombatEvent(person, rolledPerson, attackResult);
 
             eventList.Add(attackEvent);
 
