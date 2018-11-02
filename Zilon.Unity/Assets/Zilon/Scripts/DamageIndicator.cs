@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+
+using UnityEngine;
 using UnityEngine.UI;
+// ReSharper disable CheckNamespace
 
 public class DamageIndicator : MonoBehaviour
 {
@@ -12,13 +15,22 @@ public class DamageIndicator : MonoBehaviour
     public void SetDamage(int value)
     {
         DamageText.text = value.ToString();
+        DamageText.color = Color.red;
     }
 
+    public void SetMiss()
+    {
+        DamageText.text = "miss";
+        DamageText.color = Color.white;
+    }
+
+    [UsedImplicitly]
     public void Start()
     {
         _targetPosition = transform.position + Vector3.up * 1.5f;
     }
 
+    [UsedImplicitly]
     public void Update()
     {
         _counter += Time.deltaTime;

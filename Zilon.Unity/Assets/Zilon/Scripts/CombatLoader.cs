@@ -188,16 +188,28 @@ public class CombatLoader : MonoBehaviour
         CreateShootFlash(senderModel.transform.position);
         ShakeCamera(.5f, .05f);
 
-        if (attackEvent.Result is AttackSuccessResult attackEventResult)
-        {
-            var damageIndicator = Instantiate(DamageIndicatorPrefab, Parent);
-            damageIndicator.SetDamage(attackEventResult.Damage);
-            damageIndicator.transform.position = targetModel.transform.position + Vector3.up * 1.5f;
-            damageIndicator.Canvas.worldCamera = Camera.main;
+        var damageIndicator = Instantiate(DamageIndicatorPrefab, Parent);
 
-            if (attackEventResult.TargetIsDead)
+        damageIndicator.transform.position = targetModel.transform.position + Vector3.up * 1.5f;
+        damageIndicator.Canvas.worldCamera = Camera.main;
+
+        switch (attackEvent.Result)
+        {
+            case AttackSuccessResult attackEventResult:
             {
-                deadPersonModels.Add(targetModel);
+                damageIndicator.SetDamage(attackEventResult.Damage);
+
+                if (attackEventResult.TargetIsDead)
+                {
+                    deadPersonModels.Add(targetModel);
+                }
+
+                break;
+            }
+            case AttackMissResult _:
+            {
+                damageIndicator.SetMiss();
+                break;
             }
         }
     }
