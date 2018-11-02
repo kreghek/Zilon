@@ -19,5 +19,6 @@ public class CombatInstaller : MonoInstaller<CombatInstaller>
         Container.Bind<ICombatEventBus>().To<CombatEventBus>().AsSingle();
         Container.Bind<ICombatService>().To<CombatService>().AsSingle();
         Container.Bind<IEntityManager<ICombatSquad>>().To<EntityManager<ICombatSquad>>().AsSingle();
+        Container.Bind<ISkillUsageRandomSource>().To<SkillUsageRandomSource>().AsSingle();
     }
 }

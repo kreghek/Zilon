@@ -427,6 +427,8 @@ MonoBehaviour:
     type: 3}
   WallPrefab: {fileID: 3725834436989036507, guid: bb20506819684e143b2a099865c4eef5,
     type: 3}
+  DamageIndicatorPrefab: {fileID: 7190585408926552246, guid: f8b2d66ccc796c745b2d527fa3f9d3ed,
+    type: 3}
 --- !u!114 &825974232
 MonoBehaviour:
   m_ObjectHideFlags: 0

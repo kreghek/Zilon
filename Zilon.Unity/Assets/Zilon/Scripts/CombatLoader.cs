@@ -15,7 +15,6 @@ using Zilon.Core.Dices;
 using Zilon.Core.NameGeneration;
 using Zilon.Core.Players;
 using Zilon.Core.Spatial;
-using Random = System.Random;
 
 // ReSharper disable CheckNamespace
 
@@ -46,6 +45,7 @@ public class CombatLoader : MonoBehaviour
     public ShootFlash ShootFlashPrefab;
     public BulletTracer ShootTracerPrefab;
     public GameObject WallPrefab;
+    public DamageIndicator DamageIndicatorPrefab;
 
     public CombatLoader()
     {
@@ -188,9 +188,17 @@ public class CombatLoader : MonoBehaviour
         CreateShootFlash(senderModel.transform.position);
         ShakeCamera(.5f, .05f);
 
-        if (attackEvent.TargetIsDead)
+        if (attackEvent.Result is AttackSuccessResult attackEventResult)
         {
-            deadPersonModels.Add(targetModel);
+            var damageIndicator = Instantiate(DamageIndicatorPrefab, Parent);
+            damageIndicator.SetDamage(attackEventResult.Damage);
+            damageIndicator.transform.position = targetModel.transform.position + Vector3.up * 1.5f;
+            damageIndicator.Canvas.worldCamera = Camera.main;
+
+            if (attackEventResult.TargetIsDead)
+            {
+                deadPersonModels.Add(targetModel);
+            }
         }
     }
 
