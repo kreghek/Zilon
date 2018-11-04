@@ -26,12 +26,17 @@ namespace Zilon.Core.Dices
             return RollInner(dice);
         }
 
-        private int RollInner(Roll dice)
+        private int RollInner(Roll rollData)
         {
             var sum = 0;
-            for (var i = 0; i < dice.Count; i++)
+            for (var i = 0; i < rollData.Count; i++)
             {
-                sum += _dice.Roll(dice.Dice);
+                sum += _dice.Roll(rollData.Dice);
+            }
+
+            if (rollData.Modifiers != null)
+            {
+                sum += rollData.Modifiers.ResultBuff;
             }
 
             return sum;
